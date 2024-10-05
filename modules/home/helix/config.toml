@@ -1,0 +1,55 @@
+theme = "iroaseta"
+
+[editor]
+auto-save = true
+cursorcolumn = true
+cursorline = true
+line-number = "relative"
+rulers = [80]
+scrolloff = 3
+text-width = 80
+true-color = true
+
+[editor.cursor-shape]
+insert = "bar"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+# [editor.inline-diagnostics]
+# cursor-line = "hint"
+# other-lines = "warning"
+
+[editor.indent-guides]
+render = true
+
+[editor.soft-wrap]
+enable = true
+wrap-at-text-width = true
+
+[editor.statusline]
+left = [
+  "mode",
+  "spacer",
+  "version-control",
+  "spinner",
+  "read-only-indicator",
+  "file-modification-indicator",
+]
+center = ["file-absolute-path"]
+right = [
+  "diagnostics",
+  "selections",
+  "register",
+  "position",
+  "file-encoding",
+  "file-line-ending",
+  "file-type",
+]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.whitespace]
+render = "all"
