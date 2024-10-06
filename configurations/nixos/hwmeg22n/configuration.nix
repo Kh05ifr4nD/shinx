@@ -1,5 +1,7 @@
 { pkgs, ... }:
 {
+  hardware.graphics.enable = true;
+  i18n.defaultLocale = "zh_CN.UTF-8";
   networking.hostName = "hwmeg22n";
   nix = {
     gc = {
@@ -27,8 +29,14 @@
       ];
     };
   };
-  nixpkgs.hostPlatform = "aarch64-linux";
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+    hostPlatform = "aarch64-linux";
+  };
   system.stateVersion = "24.05";
+  time.timeZone = "Asia/Shanghai";
   users.users.meandssh = {
     extraGroups = [ "wheel" ];
     isNormalUser = true;

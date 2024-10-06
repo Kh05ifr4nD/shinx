@@ -3,7 +3,7 @@ default:
   @just --list
 
 # Update nix flake
-[group('Main')]
+[group('main')]
 update:
   nix flake update
 
@@ -23,6 +23,6 @@ dev:
   nix develop
 
 # Activate the configuration
-[group('Main')]
+[group('main')]
 run: lint check
   nix run

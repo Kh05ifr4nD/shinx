@@ -8,6 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
     };
+    nh.url = "github:viperML/nh";
     nixos-unified.url = "github:srid/nixos-unified";
     nixos-wsl = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,8 +21,6 @@
     systems.url = "github:nix-systems/default";
     # 秘密
     sops-nix.url = "github:Mic92/sops-nix";
-    # 编辑器
-    helix.url = "github:helix-editor/helix";
   };
 
   outputs =

@@ -19,7 +19,9 @@ in
       bat
       curl
       git
-      inputs.helix.packages."${pkgs.system}".helix
+      helix
+      mesa
+      nh
       nushell
       ripgrep
       wget

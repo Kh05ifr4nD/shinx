@@ -4,6 +4,8 @@
     flatter
     fplll
     tinymist
+    (warp-terminal.override { waylandSupport = true; })
+    zed-editor
   ];
   programs = {
     sagemath = {
