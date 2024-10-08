@@ -13,7 +13,7 @@ in
       self.nixosModules.default
     ];
   _module.args = {
-    hst = baseNameOf (toString ./.);
+    hst = baseNameOf ./.;
     usr = "meandssh";
   };
 }

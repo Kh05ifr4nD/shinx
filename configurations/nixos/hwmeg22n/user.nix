@@ -12,7 +12,7 @@ in
   home-manager = {
     useGlobalPkgs = true;
     users."${usr}" = {
-      imports = [ (self + /configurations/home/${usr}.nix) ];
+      imports = [ (self + /configurations/home/${usr}) ];
     };
     useUserPackages = true;
   };
