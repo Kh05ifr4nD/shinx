@@ -2,20 +2,27 @@
 {
   programs = {
     git = {
+      aliases = {
+        ci = "commit";
+      };
       enable = true;
-      userName = "Kh05ifr4nD";
-      userEmail = "meandSSH0219@gmail.com";
+      extraConfig = {
+        core = {
+          autocrlf = "input";
+          editor = "hx";
+        };
+        init.defaultBranch = "main";
+        pull.rebase = "true";
+      };
       ignores = [
         "*~"
         "*.swp"
       ];
-      aliases = {
-        ci = "commit";
+      lfs = {
+        enable = true;
       };
-      extraConfig = {
-        init.defaultBranch = "main";
-        # pull.rebase = "false";
-      };
+      userEmail = "meandSSH0219@gmail.com";
+      userName = "Kh05ifr4nD";
     };
   };
 }

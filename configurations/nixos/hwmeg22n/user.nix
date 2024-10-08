@@ -7,6 +7,7 @@
 let
   inherit (flake) inputs;
   inherit (inputs) self;
+  pk = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/tD28+bZ/dJiBqBSxpZ96A4GBniGy2eLTkvlj9/ElQ";
 in
 {
   home-manager = {
@@ -23,10 +24,10 @@ in
       "root"
     ];
   };
-  system.stateVersion = "24.05";
   users.users.meandssh = {
     extraGroups = [ "wheel" ];
     isNormalUser = true;
+    openssh.authorizedKeys.keys = [ pk ];
     shell = pkgs.nushell;
   };
   wsl.defaultUser = usr;

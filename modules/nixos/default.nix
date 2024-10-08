@@ -22,6 +22,7 @@ in
       helix
       nushell
       ripgrep
+      kdePackages.breeze
       unzip
       wget
       xz
