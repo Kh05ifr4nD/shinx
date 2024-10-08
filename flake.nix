@@ -8,7 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
     };
-    nh.url = "github:viperML/nh";
     nixos-unified.url = "github:srid/nixos-unified";
     nixos-wsl = {
       inputs.nixpkgs.follows = "nixpkgs";

@@ -13,9 +13,7 @@
       package = pkgs.sage.override {
         extraPythonPackages =
           ps: with ps; [
-            loguru
             pycryptodome
-            pyside6
           ];
         requireSageTests = false;
       };
