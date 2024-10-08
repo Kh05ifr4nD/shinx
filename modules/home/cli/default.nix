@@ -5,15 +5,8 @@
     hyperfine
   ];
   programs = {
-    bat = {
-      enable = true;
-    };
     btop = {
       enable = true;
-    };
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
     };
     fastfetch = {
       enable = true;

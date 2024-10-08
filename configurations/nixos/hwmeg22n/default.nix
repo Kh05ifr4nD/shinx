@@ -7,7 +7,7 @@ in
 {
   imports =
     with builtins;
-    map (fn: ./${fn}) (filter (fn: fn != "default.nix") (attrNames (readDir ./.)))
+    map (f: ./${f}) (filter (f: f != "default.nix") (attrNames (readDir ./.)))
     ++ [
       inputs.nixos-wsl.nixosModules.default
       self.nixosModules.default

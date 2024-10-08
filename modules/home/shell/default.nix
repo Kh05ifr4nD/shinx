@@ -17,13 +17,14 @@
       shellAliases = {
         cd = "z";
         docker = "podman";
+        j = "just";
         ls = "ls -afm";
       };
     };
     starship = {
       enable = true;
       enableNushellIntegration = true;
-      settings = with builtins; fromTOML (readFile ./starship.toml);
+      settings = fromTOML (builtins.readFile ./starship.toml);
     };
   };
 }

@@ -16,7 +16,6 @@ in
     systemPackages = with pkgs; [
       # Flakes clones its dependencies through the git command,
       # so git must be installed first
-      adwaita-icon-theme
       bat
       curl
       git
@@ -32,12 +31,11 @@ in
   };
   imports =
     with builtins;
-    map (fn: ./${fn}) (filter (fn: fn != "default.nix") (attrNames (readDir ./.)))
+    map (f: ./${f}) (filter (f: f != "default.nix") (attrNames (readDir ./.)))
     ++ (with inputs; [
       nix-ld.nixosModules.nix-ld
       sops-nix.nixosModules.sops
     ]);
   programs.nix-ld.dev.enable = true;
-  programs.dconf.enable = true;
   services.openssh.enable = true;
 }
