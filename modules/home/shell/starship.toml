@@ -70,4 +70,3 @@ ssh_only = false
 format = '[@](bold blink purple)[$hostname](bold yellow)'
 trim_at = "."
 disabled = false
-

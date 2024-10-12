@@ -1,28 +1,41 @@
-# Default command when 'just' is run without arguments
-default:
-  @just --list
+set shell := ["nu", "-c"]
 
-# Update nix flake
-[group('main')]
-update:
-  nix flake update
+@default: ls
+  echo " "
+  just --list
 
-# Lint nix files
 [group('dev')]
-lint:
-  nix fmt
+ck:
+  nix flake check --show-trace
 
-# Check nix flake
-[group('dev')]
-check:
-  nix flake check
-
-# Manually enter dev shell
 [group('dev')]
 dev:
-  nix develop
+  nix develop --show-trace -c nu
 
-# Activate the configuration
+[group('cfg')]
+fla:
+  ^$env.EDITOR flake.nix
+
+[group('dev')]
+fmt:
+  nix fmt --show-trace
+
+[group('prj')]
+@ls:
+  ls -afm
+  echo " "
+  git --version
+  git status
+
 [group('main')]
-run: lint check
-  nix run
+run: fmt ck
+  nix run --show-trace
+
+[group('cfg')]
+self:
+  ^$env.EDITOR justfile
+
+[group('dev')]
+upd:
+  nix flake update
+
