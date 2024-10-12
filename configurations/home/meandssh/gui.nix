@@ -17,4 +17,7 @@
       package = pkgs.adwaita-icon-theme;
     };
   };
+  qt = {
+    enable = true;
+  };
 }

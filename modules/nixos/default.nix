@@ -23,6 +23,8 @@ in
       nushell
       ripgrep
       kdePackages.breeze
+      kdePackages.qtwayland
+      qt6ct
       unzip
       wget
       xz

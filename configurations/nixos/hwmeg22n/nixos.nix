@@ -1,6 +1,5 @@
-{ hst, ... }:
+{ ... }:
 {
-  networking.hostName = hst;
   nix = {
     gc = {
       automatic = true;
@@ -29,12 +28,5 @@
     config = {
       allowUnfree = true;
     };
-    hostPlatform = "aarch64-linux";
-  };
-  system.stateVersion = "24.05";
-  wsl = {
-    enable = true;
-    startMenuLaunchers = true;
-    useWindowsDriver = true;
   };
 }
