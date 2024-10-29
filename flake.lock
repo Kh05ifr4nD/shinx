@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1730135292,
+        "narHash": "sha256-CI27qHAbc3/tIe8sb37kiHNaeCqGxNimckCMj0lW5kg=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "ab58501b2341bc5e0fc88f2f5983a679b075ddf5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "latest",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -102,6 +123,21 @@
       "original": {
         "owner": "Mic92",
         "repo": "nix-ld",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1730161780,
+        "narHash": "sha256-z5ILcmwMtiCoHTXS1KsQWqigO7HJO8sbyK7f7wn9F/E=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "07d15e8990d5d86a631641b4c429bc0a7400cfb8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
         "type": "github"
       }
     },
@@ -236,10 +272,12 @@
     },
     "root": {
       "inputs": {
+        "disko": "disko",
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",
         "home-manager": "home-manager",
         "nix-ld": "nix-ld",
+        "nixos-hardware": "nixos-hardware",
         "nixos-unified": "nixos-unified",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",

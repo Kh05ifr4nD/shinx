@@ -1,21 +1,17 @@
-# This is your nix-darwin configuration.
-# For home configuration, see /modules/home/*
 {
+  arch,
   flake,
+  hst,
   pkgs,
-  lib,
   ...
 }:
 
 let
   inherit (flake) inputs;
-  inherit (inputs) self;
 in
 {
   environment = {
     systemPackages = with pkgs; [
-      # Flakes clones its dependencies through the git command,
-      # so git must be installed first
       bat
       curl
       git
@@ -39,6 +35,9 @@ in
       nix-ld.nixosModules.nix-ld
       sops-nix.nixosModules.sops
     ]);
+  networking.hostName = hst;
+  nixpkgs.hostPlatform = arch;
   programs.nix-ld.dev.enable = true;
   services.openssh.enable = true;
+  system.stateVersion = "24.05";
 }

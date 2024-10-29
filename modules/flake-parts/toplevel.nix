@@ -1,9 +1,8 @@
 { inputs, ... }:
-
 {
-  imports = [
-    inputs.nixos-unified.flakeModules.default
-    inputs.nixos-unified.flakeModules.autoWire
+  imports = with inputs.nixos-unified.flakeModules; [
+    autoWire
+    default
   ];
   perSystem =
     { self', pkgs, ... }:
