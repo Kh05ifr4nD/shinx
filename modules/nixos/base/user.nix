@@ -1,5 +1,6 @@
 {
   flake,
+  lib,
   pk,
   pkgs,
   usr,
@@ -25,7 +26,7 @@ in
     ];
   };
   users.users.${usr} = {
-    extraGroups = [ "wheel" ];
+    extraGroups = lib.mkBefore [ "wheel" ];
     isNormalUser = true;
     openssh.authorizedKeys.keys = [ pk ];
     shell = pkgs.nushell;

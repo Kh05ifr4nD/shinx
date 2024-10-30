@@ -8,7 +8,7 @@ let
 in
 {
   imports = [
-    self.homeModules.default
+    self.homeModules.base
   ];
   _module.args = {
     usr = baseNameOf ./.;
