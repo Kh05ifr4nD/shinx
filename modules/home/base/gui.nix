@@ -17,8 +17,15 @@
     };
   };
   home.packages = with pkgs; [
+    code-cursor
+    firefox-esr
+    qq
     (warp-terminal.override { waylandSupport = true; })
+    xclip
+    xsel
+    wl-clipboard
     zed-editor
+    zotero
   ];
   qt = {
     enable = true;

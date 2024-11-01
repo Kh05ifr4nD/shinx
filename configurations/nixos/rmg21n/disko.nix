@@ -8,9 +8,9 @@ in
   imports = [ inputs.disko.nixosModules.default ];
   disko.devices = {
     disk = {
-      nvme0n1 = {
+      main = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = "/dev/disk/by-id/nvme-WD_Blue_SN570_500GB_SSD_214534478001";
         content = {
           type = "gpt";
           partitions = {
@@ -97,10 +97,11 @@ in
               };
             };
             swap = {
-              size = "100%";
+              size = "36G";
               content = {
                 type = "swap";
-                randomEncryption = true;
+                discardPolicy = "both";
+                resumeDevice = true;
               };
             };
           };

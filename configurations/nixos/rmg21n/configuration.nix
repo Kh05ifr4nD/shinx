@@ -10,18 +10,25 @@
 }:
 
 {
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = false;
+  boot = {
+    loader = {
+      efi = {
+        canTouchEfiVariables = false;
+      };
+      grub = {
+        enable = true;
+        efiSupport = true;
+        devices = [ "nodev" ];
+        useOSProber = true;
+      };
     };
-    grub = {
-      enable = true;
-      efiSupport = true;
-      devices = [ "nodev" ];
-      useOSProber = true;
+
+    supportedFilesystems = {
+      btrfs = true;
+      ntfs = true;
     };
   };
-
+  time.hardwareClockInLocalTime = true;
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

@@ -4,7 +4,6 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "CascadiaMono" ]; })
-      noto-fonts-color-emoji
       source-sans-pro
       source-serif-pro
       source-han-sans
@@ -13,15 +12,26 @@
 
     fontconfig = {
       defaultFonts = {
+        emoji = [
+          "Noto Color Emoji"
+        ];
         serif = [
           "Source Han Serif"
           "Source Serif Pro"
         ];
         sansSerif = [
           "Source Han Sans"
-          "Source Snas Pro"
+          "Source Sans Pro"
         ];
         monospace = [ "CascadiaMono" ];
+      };
+      enable = true;
+      hinting = {
+        enable = true;
+        style = "slight";
+      };
+      subpixel = {
+        rgba = "rgb";
       };
     };
   };

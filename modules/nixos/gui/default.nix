@@ -4,10 +4,13 @@
     dconf = {
       enable = true;
     };
+
+    localsend = {
+      enable = true;
+      openFirewall = false;
+    };
   };
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
+  services = {
+    v2raya.enable = true;
   };
 }

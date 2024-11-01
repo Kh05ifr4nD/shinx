@@ -19,6 +19,7 @@
         docker = "podman";
         j = "just";
         ls = "ls -afm";
+        shinx = "sudo nix run /home/meandssh/shinx#activate";
       };
     };
     starship = {
