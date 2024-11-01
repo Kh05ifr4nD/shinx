@@ -12,7 +12,7 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
   '';
-in 
+in
 {
   environment.systemPackages = [ nvidia-offload ];
   hardware = {
@@ -31,7 +31,10 @@ in
       prime = {
         amdgpuBusId = "PCI:6:0:0";
         nvidiaBusId = "PCI:1:0:0";
-        offload.enable = true;
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
       };
       open = false;
       # Enable the Nvidia settings menu,
