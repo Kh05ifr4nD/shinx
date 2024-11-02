@@ -4,10 +4,13 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "CascadiaMono" ]; })
+      noto-fonts-cjk
+      noto-fonts-extra
       source-sans-pro
       source-serif-pro
       source-han-sans
       source-han-serif
+      wqy_zenhei
     ];
 
     fontconfig = {

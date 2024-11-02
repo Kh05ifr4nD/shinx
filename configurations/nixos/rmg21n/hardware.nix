@@ -33,6 +33,11 @@
     kernelModules = [ "kvm-amd" ];
     kernelPackages = pkgs.linuxPackages_zen;
   };
+  fileSystems."/run/media/meandssh" = {
+    device = "/dev/disk/by-id/nvme-WD_PC_SN540_SDDPNPF-512G_230129805588-part3";
+    fsType = "ntfs3";
+  };
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction

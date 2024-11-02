@@ -24,6 +24,7 @@
     xclip
     xsel
     wl-clipboard
+    xournalpp
     zed-editor
     zotero
   ];

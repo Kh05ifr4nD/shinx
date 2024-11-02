@@ -10,6 +10,11 @@ let
   inherit (flake) inputs;
 in
 {
-  networking.networkmanager.enable = true;
+  networking = {
+    firewall = {
+      enable = true;
+    };
+    networkmanager.enable = true;
+  };
   users.users.${usr}.extraGroups = lib.mkAfter [ "networkmanager" ];
 }

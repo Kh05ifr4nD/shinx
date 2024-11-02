@@ -12,6 +12,7 @@ in
 {
   environment = {
     sessionVariables = {
+      EDITOR = "hx";
       NIXOS_OZONE_WL = "1";
     };
     systemPackages = with pkgs; [
@@ -29,7 +30,6 @@ in
       xz
       yazi
     ];
-    variables.EDITOR = "hx";
   };
   imports =
     with builtins;

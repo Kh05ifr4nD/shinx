@@ -23,10 +23,10 @@
       };
     };
 
-    supportedFilesystems = {
-      btrfs = true;
-      ntfs = true;
-    };
+    supportedFilesystems = [
+      "btrfs"
+      "ntfs"
+    ];
   };
   time.hardwareClockInLocalTime = true;
   # networking.hostName = "nixos"; # Define your hostname.

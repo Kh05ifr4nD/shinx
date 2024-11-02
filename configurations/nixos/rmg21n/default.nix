@@ -9,7 +9,9 @@ in
     with builtins;
     map (f: ./${f}) (filter (f: f != "default.nix") (attrNames (readDir ./.)))
     ++ (with self.nixosModules; [
+      audio
       base
+      bluetooth
       fcitx5
       gui
       network

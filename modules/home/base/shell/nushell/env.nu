@@ -1,1 +1,1 @@
-$env.EDITOR = 'hx'
+

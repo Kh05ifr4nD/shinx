@@ -2,18 +2,18 @@
   description = "NixOS & Nix Darwin & Home Manager 统一配置";
 
   inputs = {
-    # 核心 Flake
+    # 硬盘
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/disko/latest";
     };
+    # 核心
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-root.url = "github:srid/flake-root";
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
     };
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-unified.url = "github:srid/nixos-unified";
     nixos-wsl = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,6 +27,8 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     # 秘密
     sops-nix.url = "github:Mic92/sops-nix";
+    # 音频
+    musnix.url = "github:musnix/musnix";
   };
   nixConfig = {
     substituters = [

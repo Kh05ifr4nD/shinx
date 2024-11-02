@@ -7,7 +7,7 @@
 
     localsend = {
       enable = true;
-      openFirewall = false;
+      openFirewall = true;
     };
   };
   services = {
