@@ -1,9 +1,5 @@
 { inputs, ... }:
 {
-  imports = with inputs; [
-    flake-root.flakeModule
-    treefmt-nix.flakeModule
-  ];
   perSystem =
     { config, pkgs, ... }:
     {
@@ -13,9 +9,8 @@
           treefmt.build.devShell
         ];
         name = "shinx";
-        meta.description = "NixOS & Nix Darwin & Home Manager 统一配置";
+        meta.description = "NixOS & Nix Darwin & Home Manager 配置";
         packages = with pkgs; [
-          just
           nixd
         ];
       };

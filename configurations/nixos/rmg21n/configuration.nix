@@ -16,6 +16,7 @@
         canTouchEfiVariables = false;
       };
       grub = {
+        configurationLimit = 10;
         enable = true;
         efiSupport = true;
         devices = [ "nodev" ];

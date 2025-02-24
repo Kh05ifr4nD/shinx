@@ -18,8 +18,6 @@
   };
   home.packages = with pkgs; [
     code-cursor
-    firefox-esr
-    qq
     (warp-terminal.override { waylandSupport = true; })
     xclip
     xsel
@@ -28,6 +26,13 @@
     zed-editor
     zotero
   ];
+  programs = {
+    firefox = {
+      enable = true;
+      languagePacks = [ "zh-CN" ];
+      nativeMessagingHosts = [ pkgs.kdePackages.plasma-browser-integration ];
+    };
+  };
   qt = {
     enable = true;
   };

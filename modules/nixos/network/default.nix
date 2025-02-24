@@ -1,13 +1,11 @@
 {
   flake,
   lib,
-  pkgs,
-  usr,
   ...
 }:
 
 let
-  inherit (flake) inputs;
+  inherit (flake.config) user;
 in
 {
   networking = {
@@ -16,5 +14,5 @@ in
     };
     networkmanager.enable = true;
   };
-  users.users.${usr}.extraGroups = lib.mkAfter [ "networkmanager" ];
+  users.users.${user.name}.extraGroups = lib.mkAfter [ "networkmanager" ];
 }

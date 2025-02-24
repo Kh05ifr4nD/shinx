@@ -3,7 +3,6 @@
   home.packages = with pkgs; [
     just
     nixd
-    nixfmt-rfc-style
   ];
   programs = {
     direnv = {

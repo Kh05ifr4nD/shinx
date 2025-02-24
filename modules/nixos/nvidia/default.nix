@@ -43,7 +43,9 @@ in
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
+    nvidia-container-toolkit.enable = true;
   };
+  programs.coolercontrol.nvidiaSupport = true;
   services.xserver = {
     enable = true;
     videoDrivers = lib.mkDefault [ "nvidia" ];

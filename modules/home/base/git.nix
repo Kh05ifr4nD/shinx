@@ -1,4 +1,7 @@
-{ ... }:
+{ flake,... }:
+let
+  inherit (flake.config) user;
+in
 {
   programs = {
     git = {
@@ -21,8 +24,8 @@
       lfs = {
         enable = true;
       };
-      userEmail = "meandSSH0219@gmail.com";
-      userName = "Kh05ifr4nD";
+      userEmail = "${user.email}";
+      userName = "${user.git-name}";
     };
   };
 }

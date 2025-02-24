@@ -36,6 +36,15 @@
   fileSystems."/run/media/meandssh" = {
     device = "/dev/disk/by-id/nvme-WD_PC_SN540_SDDPNPF-512G_230129805588-part3";
     fsType = "ntfs3";
+    options = [
+      "async"
+      "discard"
+      "force"
+      "prealloc"
+      "ro"
+      "sys_immutable"
+      "windows_names"
+    ];
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

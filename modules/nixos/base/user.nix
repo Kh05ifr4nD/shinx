@@ -1,34 +1,32 @@
 {
   flake,
   lib,
-  pk,
   pkgs,
-  usr,
   ...
 }:
 let
-  inherit (flake) inputs;
-  inherit (inputs) self;
+  inherit (flake.config) user;
+  
 in
 {
   home-manager = {
     useGlobalPkgs = true;
-    users.${usr} = {
-      imports = [ (self + /configurations/home/${usr}) ];
+    users.${user.name} = {
+      imports = [ (flake.inputs.self + /configurations/home) ];
     };
     useUserPackages = true;
   };
   nix.settings = {
-    allowed-users = [ usr ];
+    allowed-users = [ user.name ];
     trusted-users = [
-      usr
+      user.name
       "root"
     ];
   };
-  users.users.${usr} = {
+  users.users.${user.name} = {
     extraGroups = lib.mkBefore [ "wheel" ];
     isNormalUser = true;
-    openssh.authorizedKeys.keys = [ pk ];
+    openssh.authorizedKeys.keys = [ user.pubkey ];
     shell = pkgs.nushell;
   };
 }

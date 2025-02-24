@@ -1,41 +1,40 @@
 set shell := ["nu", "-c"]
 
 @default: ls
-  echo " "
-  just --list
+    echo " "
+    just --list
 
 [group('dev')]
 ck:
-  nix flake check --show-trace
+    nix flake check --show-trace
 
 [group('dev')]
 dev:
-  nix develop --show-trace -c nu
+    nix develop --show-trace -c nu
 
 [group('cfg')]
 fla:
-  ^$env.EDITOR flake.nix
+    ^$env.EDITOR flake.nix
 
 [group('dev')]
 fmt:
-  nix fmt --show-trace
+    nix fmt --show-trace
 
 [group('prj')]
 @ls:
-  ls -afm
-  echo " "
-  git --version
-  git status
+    ls -afm
+    echo " "
+    git --version
+    git status
 
 [group('main')]
 run: fmt ck
-  nix run --show-trace
+    nix run --show-trace
 
 [group('cfg')]
 self:
-  ^$env.EDITOR justfile
+    ^$env.EDITOR justfile
 
 [group('dev')]
 upd:
-  nix flake update
-
+    nix flake update

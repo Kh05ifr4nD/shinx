@@ -1,15 +1,14 @@
 {
   flake,
-  usr,
   ...
 }:
 let
-  inherit (flake) inputs;
+  inherit (flake.config) user;
 in
 {
-  imports = [ inputs.nixos-wsl.nixosModules.default ];
+  imports = [ flake.inputs.nixos-wsl.nixosModules.default ];
   wsl = {
-    defaultUser = usr;
+    defaultUser = user.name;
     enable = true;
     startMenuLaunchers = true;
     useWindowsDriver = true;

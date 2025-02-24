@@ -1,16 +1,17 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.flake-root.flakeModule
-    inputs.treefmt-nix.flakeModule
+  imports = with inputs; [
+    treefmt-nix.flakeModule
   ];
   perSystem =
-    { config, ... }:
+    { ... }:
     {
       treefmt.config = {
-        inherit (config.flake-root) projectRootFile;
         programs = {
+          just.enable = true;
+          mdformat.enable = true;
           nixfmt.enable = true;
+          shellcheck.enable = true;
           taplo.enable = true;
         };
       };

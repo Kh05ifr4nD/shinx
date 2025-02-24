@@ -10,6 +10,11 @@
     # 核心
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-root.url = "github:srid/flake-root";
+    git-hooks-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:cachix/git-hooks.nix";
+
+    };
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
@@ -23,7 +28,6 @@
       url = "github:Mic92/nix-ld";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    systems.url = "github:nix-systems/default";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     # 秘密
     sops-nix.url = "github:Mic92/sops-nix";
@@ -43,24 +47,22 @@
   };
   outputs =
     {
-      flake-parts,
-      self,
-      systems,
+      nixos-unified,
+      nixpkgs,
       ...
     }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports =
-        with builtins;
-        map (f: ./modules/flake-parts/${f}) (attrNames (readDir ./modules/flake-parts));
-      perSystem =
-        { lib, system, ... }:
-        {
-          _module.args.pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = lib.attrValues self.overlays;
-            config.allowUnfree = true;
-          };
+    nixos-unified.lib.mkFlake {
+      inherit inputs;
+      specialArgs = {
+        user = {
+          email = "meandSSH0219@gmail.com";
+          full-name = "meandSSH";
+          gh = "Kh05ifr4nD";
+          name = "meandssh";
+          pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/tD28+bZ/dJiBqBSxpZ96A4GBniGy2eLTkvlj9/ElQ";
         };
-      systems = import systems;
+      };
+      root = ./.;
     };
+
 }
