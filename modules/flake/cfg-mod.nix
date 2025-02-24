@@ -21,6 +21,10 @@
             type = lib.types.str;
             description = "User name as shown by `id -un`";
           };
+          pub-key = lib.mkOption {
+            type = lib.types.str;
+            description = "Public key";
+          };
         };
       };
     };

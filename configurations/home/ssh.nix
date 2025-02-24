@@ -1,4 +1,7 @@
-{ user,... }:
+{ flake, ... }:
+let
+  inherit (flake.config) user;
+in
 {
   programs.ssh = {
     enable = true;
@@ -6,7 +9,7 @@
       "github.com" = {
         hostname = "github.com";
         identityFile = "/home/${user.name}/.ssh/github_ed25519";
-        user = user.gh;
+        user = user.git-name;
       };
     };
   };

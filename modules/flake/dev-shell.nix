@@ -13,6 +13,9 @@
         packages = with pkgs; [
           nixd
         ];
+        shellhook = ''
+          ${config.pre-commit.installationScript}
+        '';
       };
     };
 }
