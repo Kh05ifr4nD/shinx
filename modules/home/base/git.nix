@@ -27,5 +27,8 @@ in
       userEmail = user.email;
       userName = user.git-name;
     };
+    gitui = {
+      enable = true;
+    };
   };
 }

@@ -18,7 +18,6 @@ in
     systemPackages = with pkgs; [
       bat
       curl
-      git
       helix
       nushell
       ripgrep
@@ -123,7 +122,6 @@ in
       SDL_mixer
       SDL_ttf
       speex
-      stdenv.cc.cc
       tbb
       udev
       vulkan-loader
