@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 {
   perSystem =
     { config, pkgs, ... }:
@@ -9,7 +9,7 @@
           treefmt.build.devShell
         ];
         name = "shinx";
-        meta.description = "NixOS & Nix Darwin & Home Manager 配置";
+        meta.description = "Home Manager & Nix Darwin & NixOS 配置";
         packages = with pkgs; [
           nixd
         ];

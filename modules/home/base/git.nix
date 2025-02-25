@@ -24,8 +24,8 @@ in
       lfs = {
         enable = true;
       };
-      userEmail = "${user.email}";
-      userName = "${user.git-name}";
+      userEmail = user.email;
+      userName = user.git-name;
     };
   };
 }

@@ -48,7 +48,6 @@
   outputs =
     {
       nixos-unified,
-      nixpkgs,
       ...
     }@inputs:
     nixos-unified.lib.mkFlake {

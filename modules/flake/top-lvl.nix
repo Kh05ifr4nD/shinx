@@ -8,7 +8,7 @@
     ]
     ++ [ inputs.flake-root.flakeModule ];
   perSystem =
-    { self', pkgs, ... }:
+    { self', ... }:
     {
       packages.default = self'.packages.activate;
     };

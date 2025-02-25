@@ -7,7 +7,6 @@ in
 {
   imports = with self.nixosModules; [
     base
-    gui
     wsl
   ];
   _module.args = {

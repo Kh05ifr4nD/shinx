@@ -11,7 +11,6 @@ in
     with builtins;
     map (f: ./${f}) (filter (f: f != "default.nix") (attrNames (readDir ./.)))
     ++ (with self.homeModules; [
-      base
       gui
     ]);
 }

@@ -1,9 +1,5 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    hunspell
-    hunspellDicts.en_US-large
-  ];
   programs = {
     sagemath = {
       enable = true;
@@ -11,6 +7,7 @@
         extraPythonPackages =
           ps: with ps; [
             pycryptodome
+            wat
           ];
         requireSageTests = false;
       };

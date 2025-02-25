@@ -12,7 +12,7 @@ in
   home-manager = {
     useGlobalPkgs = true;
     users.${user.name} = {
-      imports = [ (flake.inputs.self + /configurations/home) ];
+      imports = [ (flake.inputs.self + /configurations/home/base) ];
     };
     useUserPackages = true;
   };
