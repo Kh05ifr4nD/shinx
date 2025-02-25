@@ -4,6 +4,7 @@
     { config, pkgs, ... }:
     {
       devShells.default = pkgs.mkShell {
+        buildInputs = config.pre-commit.settings.enabledPackages;
         inputsFrom = with config; [
           flake-root.devShell
           treefmt.build.devShell
