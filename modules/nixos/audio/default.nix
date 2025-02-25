@@ -1,7 +1,6 @@
-{
-  flake,
-  pkgs,
-  ...
+{ flake
+, pkgs
+, ...
 }:
 
 let

@@ -46,9 +46,8 @@
     ];
   };
   outputs =
-    {
-      nixos-unified,
-      ...
+    { nixos-unified
+    , ...
     }@inputs:
     nixos-unified.lib.mkFlake {
       inherit inputs;

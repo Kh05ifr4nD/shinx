@@ -1,9 +1,8 @@
-{
-  arch,
-  flake,
-  host,
-  pkgs,
-  ...
+{ arch
+, flake
+, host
+, pkgs
+, ...
 }:
 
 let

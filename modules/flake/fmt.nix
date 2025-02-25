@@ -10,7 +10,7 @@
         programs = {
           just.enable = true;
           mdformat.enable = true;
-          nixfmt.enable = true;
+          nixpkgs-fmt.enable = true;
           shellcheck.enable = true;
           taplo.enable = true;
         };
