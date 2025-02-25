@@ -5,7 +5,7 @@ set shell := ["nu", "-c"]
     just --list
 
 [group('dev')]
-ck:
+chk:
     nix flake check --show-trace
 
 [group('dev')]
@@ -13,7 +13,7 @@ dev:
     nix develop --show-trace -c nu
 
 [group('cfg')]
-fla:
+flake:
     ^$env.EDITOR flake.nix
 
 [group('dev')]
@@ -28,7 +28,7 @@ fmt:
     git status
 
 [group('main')]
-run: fmt ck
+run: fmt chk
     nix run --show-trace
 
 [group('cfg')]
