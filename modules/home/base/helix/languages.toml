@@ -1,0 +1,48 @@
+[[language]]
+name = "nix"
+formatter = { command = "nixfmt" }
+language-servers = ["nixd"]
+
+[[language]]
+name = "python"
+auto-format = true
+file-types = [
+  "py",
+  "pyi",
+  "py3",
+  "pyw",
+  "ptl",
+  "rpy",
+  "cpy",
+  "ipy",
+  "pyt",
+  "sage",
+  { glob = ".python_history" },
+  { glob = ".pythonstartup" },
+  { glob = ".pythonrc" },
+  { glob = "SConstruct" },
+  { glob = "SConscript" },
+]
+language-servers = ["ruff"]
+
+[[language]]
+name = "typst"
+auto-format = true
+language-servers = ["tinymist"]
+
+[[language]]
+name = "toml"
+roots = ["."]
+
+[language-server.nixd]
+command = "nixd"
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+
+[language-server.ruff.config.settings.format]
+preview = true
+
+[language-server.tinymist]
+config = { exportPdf = "onSave", formatterMode = "typstyle" }
