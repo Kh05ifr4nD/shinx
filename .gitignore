@@ -1,0 +1,6 @@
+.DS_Store
+/.idea/
+
+/.direnv/
+result
+/.pre-commit-config.yaml

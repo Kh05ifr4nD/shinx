@@ -1,0 +1,72 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# add_newline = true
+continuation_prompt = '▶▶ '
+format = """
+[╭─](purple) $os[<](bold red)$shlvl$username$hostname[>](bold red) $battery $memory_usage $all[╰─](purple) $time $directory $character
+"""
+
+[battery]
+format = "[$symbol$percentage]($style)"
+
+[[battery.display]]
+threshold = 20
+style = "red"
+
+[[battery.display]]
+threshold = 50
+style = "yellow"
+
+[[battery.display]]
+threshold = 100
+style = "green"
+
+
+[character]
+success_symbol = "[~>](bold blink green)"
+error_symbol = "[✗](bold blink red)"
+
+[directory]
+truncation_length = 10
+truncate_to_repo = true
+format = '\[[$path]($style)[$lock_symbol]($lock_style)\]'
+
+[memory_usage]
+symbol = '💿'
+format = "$symbol [${ram_pct}(|${swap_pct})]($style)"
+threshold = -1
+style = "dimmed bright-cyan"
+disabled = false
+
+[os]
+format = "[$symbol](purple)"
+disabled = false
+
+[shlvl]
+disabled = false
+threshold = -1
+symbol = '↕️'
+
+[sudo]
+style = 'bold green'
+symbol = '👩‍💻'
+disabled = false
+
+[time]
+time_format = "%T"
+format = "[🕙 $time]($style)"
+style = "bright-blue"
+disabled = false
+
+[username]
+style_user = "green bold"
+style_root = "red bold"
+format = "[$user]($style)"
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format = '[@](bold blink purple)[$hostname](bold yellow)'
+trim_at = "."
+disabled = false

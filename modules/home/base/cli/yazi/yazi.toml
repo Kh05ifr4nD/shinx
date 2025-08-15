@@ -1,0 +1,14 @@
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[manager]
+linemode = "size"
+show_hidden = true
+sort_sensitive = true
+title_format = "{cwd}"
+mouse_events = ["click", "drag", "scroll", "touch"]
+
+[preview]
+wrap = "yes"
+
+[input]
+cursor_blink = true
