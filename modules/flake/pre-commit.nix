@@ -6,10 +6,6 @@
       pre-commit = {
         check.enable = true;
         settings = {
-          default_install_hook_types = [
-            "pre-commit"
-            "commit-msg"
-          ];
           excludes = [
             "\\.lock$"
             "\\.log$"

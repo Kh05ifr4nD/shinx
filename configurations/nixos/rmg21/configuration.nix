@@ -14,11 +14,6 @@
         useOSProber = true;
       };
     };
-
-    supportedFilesystems = [
-      "btrfs"
-      "ntfs"
-    ];
   };
   time.hardwareClockInLocalTime = true;
 }
