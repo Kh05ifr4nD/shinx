@@ -1,10 +1,32 @@
-{
-  user = {
-    email = "meandSSH0219@gmail.com";
-    full-name = "Kh05ifr4nD";
-    git-name = "Kh05ifr4nD";
-    gpg-key = "C53C96675BB97001";
+{ inputs, lib, ... }:
+let
+  inherit (inputs) sops-nix;
+
+  secretFile = ./cfg.secrets.yaml;
+  secrets =
+    if builtins.pathExists secretFile then
+      sops-nix.lib.evalSopsFile { file = secretFile; }
+    else
+      lib.warn "No encrypted cfg.secrets.yaml found; using public placeholders." { };
+
+  defaultUser = {
     name = "meandssh";
-    pub-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/tD28+bZ/dJiBqBSxpZ96A4GBniGy2eLTkvlj9/ElQ";
+    git-name = "meandssh";
+    full-name = "Kh05ifr4nD";
+    email = "user@example.com";
+    pub-key = "";
+    gpg-key = null;
+  };
+
+  userSecret = lib.attrByPath [ "user" ] { } secrets;
+  secretNetwork = lib.attrByPath [ "network" ] { } secrets;
+  staticSecret = lib.attrByPath [ "staticIPv4" ] { } secretNetwork;
+  sanitizedSecrets =
+    secrets
+    // { network = { staticIPv4 = staticSecret; }; };
+in {
+  config = {
+    user = lib.recursiveUpdate defaultUser userSecret;
+    secrets = sanitizedSecrets;
   };
 }

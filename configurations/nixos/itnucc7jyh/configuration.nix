@@ -1,6 +1,8 @@
 { ... }:
 {
-  # 如需为 itnucc7jyh 配置静态 IPv4，请在上层填充 shinx.network.staticIPv4。
+  # 如需为 itnucc7jyh 配置静态 IPv4，请在上层填充 shinx.network.staticIPv4，
+  # 或者在 modules/flake/cfg.secrets.yaml（通过 sops 加密）中提供
+  # network.staticIPv4.* 字段。
   # 例如：
   # shinx.network.staticIPv4 = {
   #   enable = true;

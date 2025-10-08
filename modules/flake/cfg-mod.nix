@@ -33,5 +33,11 @@
         };
       };
     };
+
+    secrets = lib.mkOption {
+      type = lib.types.attrsOf lib.types.anything;
+      default = { };
+      description = "Decrypted secret values sourced from an encrypted flake";
+    };
   };
 }

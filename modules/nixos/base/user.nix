@@ -6,7 +6,7 @@
 }:
 let
   inherit (flake.config) user;
-
+  hasAuthorizedKey = user.pub-key != "";
 in
 {
   home-manager = {
@@ -23,10 +23,13 @@ in
       "root"
     ];
   };
-  users.users.${user.name} = {
-    extraGroups = lib.mkBefore [ "wheel" ];
-    isNormalUser = true;
-    openssh.authorizedKeys.keys = [ user.pub-key ];
-    shell = pkgs.nushell;
-  };
+  users.users.${user.name} =
+    {
+      extraGroups = lib.mkBefore [ "wheel" ];
+      isNormalUser = true;
+      shell = pkgs.nushell;
+    }
+    // lib.optionalAttrs hasAuthorizedKey {
+      openssh.authorizedKeys.keys = [ user.pub-key ];
+    };
 }
