@@ -2,17 +2,55 @@
 let
   inherit (inputs) sops-nix;
 
-  secretFile = ./cfg.secrets.yaml;
-  secrets =
-    if builtins.pathExists secretFile then
-      sops-nix.lib.evalSopsFile { file = secretFile; }
+  envSecretRaw = builtins.getEnv "SHINX_SECRETS_FILE";
+  envSecretPath =
+    if envSecretRaw == "" then
+      null
+    else if builtins.substring 0 1 envSecretRaw == "/" then
+      envSecretRaw
     else
-      lib.warn "No encrypted cfg.secrets.yaml found; using public placeholders." { };
+      lib.warn
+        "Ignoring SHINX_SECRETS_FILE because it must be an absolute path."
+        null;
+
+  secretCandidates =
+    lib.optional (envSecretPath != null) envSecretPath
+    ++ lib.optional (inputs ? secrets) "${inputs.secrets}/cfg.secrets.yaml"
+    ++ [ ./cfg.secrets.yaml ];
+
+  resolveSecretCandidate = candidate:
+    let
+      candidateStr = toString candidate;
+    in
+      if builtins.pathExists candidateStr then
+        if builtins.typeOf candidate == "path" then
+          candidate
+        else
+          builtins.toPath candidateStr
+      else
+        null;
+
+  secretFile =
+    lib.findFirst
+      (candidate: resolveSecretCandidate candidate != null)
+      null
+      secretCandidates;
+
+  secretPath =
+    if secretFile == null then null else resolveSecretCandidate secretFile;
+
+  secrets =
+    if secretPath != null then
+      sops-nix.lib.evalSopsFile { file = secretPath; }
+    else
+      lib.warn
+        "No encrypted cfg.secrets.yaml found; using placeholder configuration."
+        { };
 
   defaultUser = {
-    name = "meandssh";
-    git-name = "meandssh";
-    full-name = "Kh05ifr4nD";
+    name = "user";
+    git-name = "user";
+    full-name = "Example User";
     email = "user@example.com";
     pub-key = "";
     gpg-key = null;
