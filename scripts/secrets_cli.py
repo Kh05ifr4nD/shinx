@@ -66,6 +66,9 @@ def _encrypt(args: argparse.Namespace) -> None:
     source = _expand(args.source)
     target = _expand(args.target)
 
+    input_type = getattr(args, "input_type", "yaml")
+    output_type = getattr(args, "output_type", "yaml")
+
     if not source.exists():
         print(f"未找到待加密文件: {source}", file=sys.stderr)
         raise SystemExit(1)
@@ -76,9 +79,9 @@ def _encrypt(args: argparse.Namespace) -> None:
         "sops",
         "--encrypt",
         "--input-type",
-        args.input_type,
+        input_type,
         "--output-type",
-        args.output_type,
+        output_type,
     ]
     for recipient in recipients:
         cmd += ["--age", recipient]
@@ -93,8 +96,6 @@ def _detect_input_type(path: pathlib.Path) -> str:
     suffix = path.suffix.lower()
     if suffix in {".json"}:
         return "json"
-    if suffix in {".yaml", ".yml"}:
-        return "yaml"
 
     try:
         with path.open("r", encoding="utf-8") as fh:
@@ -107,6 +108,9 @@ def _detect_input_type(path: pathlib.Path) -> str:
                 break
     except FileNotFoundError:
         pass
+
+    if suffix in {".yaml", ".yml"}:
+        return "yaml"
 
     return "yaml"
 

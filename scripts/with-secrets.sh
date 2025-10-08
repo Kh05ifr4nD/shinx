@@ -19,7 +19,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-if ! python scripts/secrets_cli.py decrypt --target "$secret_path" --output-type json >"$tmp_file"; then
+if ! python scripts/secrets_cli.py decrypt --target "$secret_path" --input-type auto --output-type json >"$tmp_file"; then
   echo "warning: failed to decrypt secrets at $secret_path; running without SHINX_SECRETS_FILE" >&2
   rm -f "$tmp_file"
   trap - EXIT
