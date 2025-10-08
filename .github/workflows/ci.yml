@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - work
+      - "release/**"
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v11
+        with:
+          extra-conf: |
+            experimental-features = nix-command flakes
+
+      - name: Configure binary caches
+        uses: DeterminateSystems/magic-nix-cache-action@v8
+
+      - name: Check formatting
+        run: nix fmt -- --fail-on-change
+
+      - name: Run flake checks
+        run: nix flake check --impure
+
+      - name: Secrets CLI smoke test
+        run: nix run .#secrets-smoke
+
+      - name: Omnix CI smoke test
+        run: nix develop .#default --command env NIX_CONFIG="experimental-features = nix-command flakes" om ci run . --no-link

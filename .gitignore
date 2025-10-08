@@ -4,3 +4,5 @@
 /.direnv/
 result
 /.pre-commit-config.yaml
+modules/flake/cfg.secrets.yaml
+secrets/cfg.secrets.yaml

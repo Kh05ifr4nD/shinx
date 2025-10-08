@@ -12,8 +12,25 @@
       treefmt-nix.flakeModule
     ]);
   perSystem =
-    { self', ... }:
+    { pkgs, self', ... }:
     {
       packages.default = self'.packages.activate;
+      apps.secrets-smoke = {
+        type = "app";
+        program =
+          (pkgs.writeShellApplication {
+            name = "secrets-smoke";
+            runtimeInputs = with pkgs; [
+              age
+              python3
+              sops
+            ];
+            text = ''
+              set -euo pipefail
+              python ${../../scripts/secrets_cli.py} smoke "$@"
+            '';
+          }).outPath
+          + "/bin/secrets-smoke";
+      };
     };
 }

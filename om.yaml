@@ -1,0 +1,13 @@
+ci:
+  default:
+    shinx:
+      dir: .
+      steps:
+        build:
+          enable: false
+        flake-check:
+          enable: true
+        custom:
+          secrets-smoke:
+            type: app
+            name: secrets-smoke
