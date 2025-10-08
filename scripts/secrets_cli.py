@@ -9,6 +9,7 @@ import pathlib
 import stat
 import subprocess
 import sys
+import tempfile
 from typing import Iterable, List
 
 
@@ -26,9 +27,20 @@ def _ensure_key_in_env(env: dict) -> dict:
     return env
 
 
-def _run_sops(args: List[str], *, stdout=None) -> None:
-    env = _ensure_key_in_env(os.environ.copy())
-    subprocess.run(args, check=True, env=env, stdout=stdout)
+def _run_sops(
+    args: List[str], *, stdout=None, env: dict | None = None, capture_output: bool = False
+) -> subprocess.CompletedProcess[str]:
+    base_env = os.environ.copy()
+    if env is not None:
+        base_env.update(env)
+    runtime_env = _ensure_key_in_env(base_env)
+    run_kwargs: dict = {"check": True, "env": runtime_env, "text": True}
+    if stdout is not None:
+        run_kwargs["stdout"] = stdout
+    elif capture_output:
+        run_kwargs["stdout"] = subprocess.PIPE
+        run_kwargs["stderr"] = subprocess.PIPE
+    return subprocess.run(args, **run_kwargs)
 
 
 def _age_key(args: argparse.Namespace) -> None:
@@ -106,6 +118,64 @@ def _edit(args: argparse.Namespace) -> None:
     _run_sops(cmd)
 
 
+def _smoke(args: argparse.Namespace) -> None:
+    source = _expand(args.source)
+    if not source.exists():
+        print(f"未找到示例文件: {source}", file=sys.stderr)
+        raise SystemExit(1)
+
+    previous_key = os.environ.get("SOPS_AGE_KEY_FILE")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = pathlib.Path(tmpdir)
+        key_path = tmp_path / "age.key"
+        encrypted_path = tmp_path / "cfg.secrets.yaml"
+
+        try:
+            os.environ["SOPS_AGE_KEY_FILE"] = str(key_path)
+            _age_key(argparse.Namespace(key_path=str(key_path)))
+            public_key = ""
+            for line in key_path.read_text().splitlines():
+                if line.startswith("# public key:"):
+                    public_key = line.split()[-1]
+                    break
+
+            if not public_key:
+                print("未能从 Age 私钥解析公钥", file=sys.stderr)
+                raise SystemExit(1)
+
+            _encrypt(
+                argparse.Namespace(
+                    recipients=[public_key],
+                    source=str(source),
+                    target=str(encrypted_path),
+                )
+            )
+
+            decrypt_cmd = [
+                "sops",
+                "--decrypt",
+                "--input-type",
+                "yaml",
+                "--output-type",
+                "yaml",
+                str(encrypted_path),
+            ]
+            env = {"SOPS_AGE_KEY_FILE": str(key_path)}
+            result = _run_sops(decrypt_cmd, env=env, capture_output=True)
+
+            if not result.stdout.strip():
+                print("解密结果为空", file=sys.stderr)
+                raise SystemExit(1)
+
+            print("SOPS/Age 烟雾测试通过，成功加密并解密示例配置。")
+        finally:
+            if previous_key is None:
+                os.environ.pop("SOPS_AGE_KEY_FILE", None)
+            else:
+                os.environ["SOPS_AGE_KEY_FILE"] = previous_key
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="shinx 仓库密钥操作工具")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -128,6 +198,14 @@ def _parser() -> argparse.ArgumentParser:
     edit.add_argument("--target", default="secrets/cfg.secrets.yaml", help="密文路径")
     edit.add_argument("--recipients", nargs="*", default=[], help="首次创建时附加的 Age 公钥")
     edit.set_defaults(func=_edit)
+
+    smoke = sub.add_parser("smoke", help="在临时目录生成密钥并完成加解密验证")
+    smoke.add_argument(
+        "--source",
+        default="secrets/cfg.secrets.yaml.example",
+        help="用于烟雾测试的示例 YAML",
+    )
+    smoke.set_defaults(func=_smoke)
 
     return parser
 

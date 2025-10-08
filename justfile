@@ -20,6 +20,10 @@ flake:
 fmt:
     nix fmt --show-trace
 
+[group('ci')]
+fmt-check:
+    nix fmt -- --fail-on-change
+
 [group('prj')]
 @ls:
     ls -afm
@@ -52,6 +56,13 @@ secrets-decrypt target="secrets/cfg.secrets.yaml":
 secrets-edit target="secrets/cfg.secrets.yaml" recipients="":
     bash -lc "python scripts/secrets_cli.py edit --target '{{ target }}' --recipients {{ recipients }}"
 
+secrets-smoke source="secrets/cfg.secrets.yaml.example":
+    nix develop .#default --command python scripts/secrets_cli.py smoke --source "{{ source }}"
+
 secrets-check target="secrets/cfg.secrets.yaml":
     nix flake check --impure --show-trace
     python scripts/secrets_cli.py decrypt --target "{{ target }}" >/dev/null
+
+[group('ci')]
+ci: fmt-check chk
+    nix develop .#default --command python scripts/secrets_cli.py smoke
