@@ -66,6 +66,9 @@ def _encrypt(args: argparse.Namespace) -> None:
     source = _expand(args.source)
     target = _expand(args.target)
 
+    input_type = getattr(args, "input_type", "yaml")
+    output_type = getattr(args, "output_type", "yaml")
+
     if not source.exists():
         print(f"未找到待加密文件: {source}", file=sys.stderr)
         raise SystemExit(1)
@@ -76,9 +79,9 @@ def _encrypt(args: argparse.Namespace) -> None:
         "sops",
         "--encrypt",
         "--input-type",
-        "yaml",
+        input_type,
         "--output-type",
-        "yaml",
+        output_type,
     ]
     for recipient in recipients:
         cmd += ["--age", recipient]
@@ -89,15 +92,42 @@ def _encrypt(args: argparse.Namespace) -> None:
     print(f"已写入密文: {target}")
 
 
+def _detect_input_type(path: pathlib.Path) -> str:
+    suffix = path.suffix.lower()
+    if suffix in {".json"}:
+        return "json"
+
+    try:
+        with path.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                stripped = line.lstrip()
+                if not stripped:
+                    continue
+                if stripped[0] in "{[":
+                    return "json"
+                break
+    except FileNotFoundError:
+        pass
+
+    if suffix in {".yaml", ".yml"}:
+        return "yaml"
+
+    return "yaml"
+
+
 def _decrypt(args: argparse.Namespace) -> None:
     target = _expand(args.target)
+    if args.input_type == "auto":
+        input_type = _detect_input_type(target)
+    else:
+        input_type = args.input_type
     cmd = [
         "sops",
         "--decrypt",
         "--input-type",
-        "yaml",
+        input_type,
         "--output-type",
-        "yaml",
+        args.output_type,
         str(target),
     ]
     _run_sops(cmd)
@@ -149,6 +179,8 @@ def _smoke(args: argparse.Namespace) -> None:
                     recipients=[public_key],
                     source=str(source),
                     target=str(encrypted_path),
+                    input_type="yaml",
+                    output_type="yaml",
                 )
             )
 
@@ -188,10 +220,34 @@ def _parser() -> argparse.ArgumentParser:
     encrypt.add_argument("--recipients", nargs="+", help="Age 公钥列表 (可指定多个)")
     encrypt.add_argument("--source", default="secrets/cfg.secrets.yaml.example", help="明文 YAML 路径")
     encrypt.add_argument("--target", default="secrets/cfg.secrets.yaml", help="输出密文路径")
+    encrypt.add_argument(
+        "--input-type",
+        choices=["yaml", "json"],
+        default="yaml",
+        help="明文解析格式",
+    )
+    encrypt.add_argument(
+        "--output-type",
+        choices=["yaml", "json"],
+        default="yaml",
+        help="密文存储格式",
+    )
     encrypt.set_defaults(func=_encrypt)
 
     decrypt = sub.add_parser("decrypt", help="解密并输出 cfg.secrets.yaml")
     decrypt.add_argument("--target", default="secrets/cfg.secrets.yaml", help="密文路径")
+    decrypt.add_argument(
+        "--input-type",
+        choices=["yaml", "json", "auto"],
+        default="auto",
+        help="密文解析格式 (auto 会根据后缀或内容猜测)",
+    )
+    decrypt.add_argument(
+        "--output-type",
+        choices=["yaml", "json"],
+        default="yaml",
+        help="解密输出格式",
+    )
     decrypt.set_defaults(func=_decrypt)
 
     edit = sub.add_parser("edit", help="使用 sops 直接编辑密文")
