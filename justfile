@@ -6,7 +6,7 @@ set shell := ["nu", "-c"]
 
 [group('dev')]
 chk:
-    nix flake check --show-trace
+    bash scripts/with-secrets.sh secrets/cfg.secrets.yaml nix flake check --impure --show-trace
 
 [group('dev')]
 dev:
@@ -33,7 +33,7 @@ fmt-check:
 
 [group('main')]
 run: fmt chk
-    nix run --show-trace
+    bash scripts/with-secrets.sh secrets/cfg.secrets.yaml nix run --impure --show-trace
 
 [group('cfg')]
 self:
@@ -60,7 +60,7 @@ secrets-smoke source="secrets/cfg.secrets.yaml.example":
     nix develop .#default --command python scripts/secrets_cli.py smoke --source "{{ source }}"
 
 secrets-check target="secrets/cfg.secrets.yaml":
-    nix flake check --impure --show-trace
+    bash scripts/with-secrets.sh "{{ target }}" nix flake check --impure --show-trace
     python scripts/secrets_cli.py decrypt --target "{{ target }}" >/dev/null
 
 [group('ci')]

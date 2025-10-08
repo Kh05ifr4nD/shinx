@@ -78,7 +78,7 @@ def _encrypt(args: argparse.Namespace) -> None:
         "--input-type",
         "yaml",
         "--output-type",
-        "yaml",
+        args.output_type,
     ]
     for recipient in recipients:
         cmd += ["--age", recipient]
@@ -97,7 +97,7 @@ def _decrypt(args: argparse.Namespace) -> None:
         "--input-type",
         "yaml",
         "--output-type",
-        "yaml",
+        args.output_type,
         str(target),
     ]
     _run_sops(cmd)
@@ -188,10 +188,22 @@ def _parser() -> argparse.ArgumentParser:
     encrypt.add_argument("--recipients", nargs="+", help="Age 公钥列表 (可指定多个)")
     encrypt.add_argument("--source", default="secrets/cfg.secrets.yaml.example", help="明文 YAML 路径")
     encrypt.add_argument("--target", default="secrets/cfg.secrets.yaml", help="输出密文路径")
+    encrypt.add_argument(
+        "--output-type",
+        choices=["yaml", "json"],
+        default="yaml",
+        help="密文存储格式",
+    )
     encrypt.set_defaults(func=_encrypt)
 
     decrypt = sub.add_parser("decrypt", help="解密并输出 cfg.secrets.yaml")
     decrypt.add_argument("--target", default="secrets/cfg.secrets.yaml", help="密文路径")
+    decrypt.add_argument(
+        "--output-type",
+        choices=["yaml", "json"],
+        default="yaml",
+        help="解密输出格式",
+    )
     decrypt.set_defaults(func=_decrypt)
 
     edit = sub.add_parser("edit", help="使用 sops 直接编辑密文")

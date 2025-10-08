@@ -66,6 +66,13 @@ in
     };
   };
 
+  options.shinx.secretsMeta = lib.mkOption {
+    type = lib.types.attrsOf lib.types.anything;
+    readOnly = true;
+    default = flake.config.secretsMeta;
+    description = "Metadata describing how cfg.secrets.yaml was sourced and decoded for the current evaluation.";
+  };
+
   config = {
     assertions = [
       {

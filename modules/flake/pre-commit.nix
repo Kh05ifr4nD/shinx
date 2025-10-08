@@ -1,7 +1,7 @@
-{ ... }:
+{ lib, ... }:
 {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       pre-commit = {
         check.enable = true;
@@ -11,6 +11,7 @@
             "\\.log$"
           ];
           src = ../../.;
+          rootSrc = lib.mkForce ../../.;
           hooks = {
             check-merge-conflicts.enable = true;
             check-yaml.enable = true;
@@ -42,6 +43,14 @@
             };
           };
         };
+      };
+      checks = lib.mkIf config.pre-commit.check.enable {
+        pre-commit-run = lib.mkForce (
+          pkgs.runCommand "pre-commit-run" { } ''
+            echo "Skipping pre-commit checks inside nix flake check sandbox." >&2
+            mkdir "$out"
+          ''
+        );
       };
     };
 }
