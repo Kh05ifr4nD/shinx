@@ -17,6 +17,7 @@
           nixd
           nixfmt-rfc-style
           nushell
+          omnix
           python3
           sops
         ];

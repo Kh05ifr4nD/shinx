@@ -66,3 +66,7 @@ secrets-check target="secrets/cfg.secrets.yaml":
 [group('ci')]
 ci: fmt-check chk
     nix develop .#default --command python scripts/secrets_cli.py smoke
+
+[group('ci')]
+om-ci:
+    nix run github:juspay/omnix -- ci run .

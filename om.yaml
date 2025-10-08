@@ -1,0 +1,37 @@
+ci:
+  default:
+    root:
+      dir: .
+      steps:
+        build:
+          enable: false
+        lockfile:
+          enable: false
+        flake-check:
+          enable: false
+        custom:
+          fmt-check:
+            type: app
+            name: fmt-check
+          flake-check:
+            type: app
+            name: flake-check
+          secrets-smoke:
+            type: app
+            name: secrets-smoke
+health:
+  default:
+    nix-version:
+      supported: ">=2.18.0"
+    direnv:
+      required: false
+    homebrew:
+      enable: false
+develop:
+  default:
+    readme: |
+      📦 使用 `om develop` 可以在任何环境里快速拉起仓库的开发 Shell。
+
+      常用命令：
+        om develop enter   # 等价于 `nix develop`
+        om develop shell   # 打开一次性 shell
