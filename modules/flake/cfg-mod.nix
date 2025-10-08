@@ -33,5 +33,16 @@
         };
       };
     };
+
+    secrets = lib.mkOption {
+      type = lib.types.attrsOf lib.types.anything;
+      default = { };
+      description = ''
+        Decrypted secret values sourced from an encrypted flake. Secrets are
+        discovered via the SHINX_SECRETS_FILE environment variable, an optional
+        `secrets` flake input or repository-local cfg.secrets.yaml instances
+        (preferring secrets/cfg.secrets.yaml).
+      '';
+    };
   };
 }

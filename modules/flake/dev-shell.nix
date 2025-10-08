@@ -12,8 +12,14 @@
         name = "shinx";
         meta.description = "Home Manager & Nix Darwin & NixOS Configurations Based on https://github.com/srid/nixos-unified";
         packages = with pkgs; [
+          age
+          just
           nixd
           nixfmt-rfc-style
+          nushell
+          omnix
+          python3
+          sops
         ];
         shellhook = '''';
       };

@@ -10,7 +10,10 @@
       flake-root.flakeModule
       git-hooks-nix.flakeModule
       treefmt-nix.flakeModule
-    ]);
+    ])
+    ++ [
+      ./apps.nix
+    ];
   perSystem =
     { self', ... }:
     {

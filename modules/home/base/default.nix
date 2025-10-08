@@ -16,6 +16,7 @@ in
   };
 
   imports = with builtins; map (f: ./${f}) (filter (f: f != "default.nix") (attrNames (readDir ./.)));
+  nixpkgs.config.allowUnfree = true;
   xdg = {
     enable = true;
     portal = {
