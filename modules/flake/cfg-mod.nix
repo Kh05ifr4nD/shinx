@@ -40,7 +40,8 @@
       description = ''
         Decrypted secret values sourced from an encrypted flake. Secrets are
         discovered via the SHINX_SECRETS_FILE environment variable, an optional
-        `secrets` flake input or a repository-local cfg.secrets.yaml.
+        `secrets` flake input or repository-local cfg.secrets.yaml instances
+        (preferring secrets/cfg.secrets.yaml).
       '';
     };
   };

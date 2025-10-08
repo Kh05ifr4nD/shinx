@@ -1,11 +1,25 @@
-{ config, flake, lib, ... }:
+{
+  config,
+  flake,
+  lib,
+  ...
+}:
 
 let
   inherit (flake.config) user;
   secretDefaults = lib.attrByPath [ "network" "staticIPv4" ] { } flake.config.secrets;
   cfg = config.shinx.network.staticIPv4;
-  inherit (lib) mkAfter mkForce mkIf mkMerge mkOption optionalAttrs types;
-in {
+  inherit (lib)
+    mkAfter
+    mkForce
+    mkIf
+    mkMerge
+    mkOption
+    optionalAttrs
+    types
+    ;
+in
+{
   options.shinx.network.staticIPv4 = {
     enable = mkOption {
       type = types.bool;
@@ -44,7 +58,10 @@ in {
     dnsServers = mkOption {
       type = types.listOf types.str;
       default = lib.attrByPath [ "dnsServers" ] [ ] secretDefaults;
-      example = [ "223.5.5.5" "223.6.6.6" ];
+      example = [
+        "223.5.5.5"
+        "223.6.6.6"
+      ];
       description = "Optional list of DNS servers to use with the static IPv4 configuration.";
     };
   };

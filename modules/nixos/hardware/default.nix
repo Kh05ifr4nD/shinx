@@ -3,6 +3,7 @@
   lib,
   config,
   pkgs,
+  options,
   ...
 }:
 let
@@ -21,6 +22,9 @@ in
       intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
     enableRedistributableFirmware = true;
+  }
+  // lib.optionalAttrs (lib.hasAttrByPath [ "hardware" "sensors" "lm-sensors" ] options) {
+    sensors.lm-sensors.enable = true;
   };
 
   services = {
@@ -31,6 +35,8 @@ in
     fstrim.enable = true;
     fwupd.enable = true;
     irqbalance.enable = true;
+  }
+  // lib.optionalAttrs (lib.hasAttrByPath [ "services" "lm_sensors" ] options) {
     lm_sensors.enable = true;
   };
 }

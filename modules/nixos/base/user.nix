@@ -23,13 +23,12 @@ in
       "root"
     ];
   };
-  users.users.${user.name} =
-    {
-      extraGroups = lib.mkBefore [ "wheel" ];
-      isNormalUser = true;
-      shell = pkgs.nushell;
-    }
-    // lib.optionalAttrs hasAuthorizedKey {
-      openssh.authorizedKeys.keys = [ user.pub-key ];
-    };
+  users.users.${user.name} = {
+    extraGroups = lib.mkBefore [ "wheel" ];
+    isNormalUser = true;
+    shell = pkgs.nushell;
+  }
+  // lib.optionalAttrs hasAuthorizedKey {
+    openssh.authorizedKeys.keys = [ user.pub-key ];
+  };
 }
