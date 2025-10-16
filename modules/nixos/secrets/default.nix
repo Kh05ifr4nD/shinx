@@ -8,26 +8,23 @@
 with lib;
 let
   inherit (flake) inputs;
-  flakeConfig = flake.config;
   agenix = inputs.agenix;
-  mysecrets = inputs.mysecrets or null;
-  hostname = config.networking.hostName;
-  hostDir = if mysecrets != null then mysecrets + "/${hostname}" else null;
-
   cfg = config.modules.secrets;
-
+  flakeConfig = flake.config;
+  hostDir = if mysecrets != null then mysecrets + "/${hostname}" else null;
+  hostname = config.networking.hostName;
+  mysecrets = inputs.mysecrets or null;
   userName = flakeConfig.user.name;
-
-  user_readable = {
-    mode = "0600";
-    owner = userName;
-  };
+  specs = import ./specs.nix { inherit userName; };
+  names = builtins.attrNames specs;
 in
 {
-  imports = [
-    agenix.nixosModules.default
-    ./requirements.nix
-  ];
+  imports =
+    with builtins;
+    map (f: ./${f}) (filter (f: f != "default.nix" && f != "specs.nix") (attrNames (readDir ./.)))
+    ++ [
+      agenix.nixosModules.default
+    ];
 
   options.modules.secrets = {
     user.enable = mkEnableOption "Enable user-level secrets (SSH/Git/Nix tokens)";
@@ -47,22 +44,18 @@ in
         in
         [ "${prefix}${base}" ];
 
-      # Automatically include Nix access tokens into nix if present
       nix.extraOptions = mkIf (config.age.secrets ? "nix-access-tokens") (mkAfter ''
         !include ${config.age.secrets."nix-access-tokens".path}
       '');
     }
 
     {
-      age.secrets = {
-        "id" = ({ file = hostDir + "/id.age"; } // user_readable);
-        "git-signing.key.conf" = ({ file = hostDir + "/git/signing.key.conf.age"; } // user_readable);
-        "ssh-config.github.conf" = {
-          file = hostDir + "/ssh/config.github.conf.age";
-          mode = "0644";
-          owner = "root";
-        };
-      };
+      age.secrets = builtins.listToAttrs (
+        map (name: {
+          name = name;
+          value = ({ file = hostDir + specs.${name}.relPath; } // specs.${name}.agePerms);
+        }) names
+      );
     }
 
     (
@@ -70,7 +63,15 @@ in
         tokens = if mysecrets != null then mysecrets + "/nix-access-tokens.age" else null;
       in
       mkIf (tokens != null && builtins.pathExists tokens) {
-        age.secrets."nix-access-tokens" = ({ file = tokens; } // user_readable);
+        age.secrets."nix-access-tokens" = (
+          {
+            file = tokens;
+          }
+          // {
+            mode = "0600";
+            owner = userName;
+          }
+        );
       }
     )
     {
@@ -81,24 +82,58 @@ in
           user = userName;
         };
 
+        "agenix/git-signing.key.conf" = mkIf (config.age.secrets ? "git-signing.key.conf") {
+          source = config.age.secrets."git-signing.key.conf".path;
+          mode = "0644";
+        };
+
+        "agenix/ssh.d/github.conf" = mkIf (config.age.secrets ? "ssh-config.github.conf") {
+          source = config.age.secrets."ssh-config.github.conf".path;
+          mode = "0644";
+        };
+
         # Make nix access tokens available to the user if present
         "agenix/nix-access-tokens" = mkIf (config.age.secrets ? "nix-access-tokens") {
           source = config.age.secrets."nix-access-tokens".path;
           mode = "0640";
           user = userName;
         };
+      };
+    }
 
-        # Only create include files if corresponding secrets are defined
-        "agenix/git-signing.key.conf" = mkIf (config.age.secrets ? "git-signing.key.conf") {
-          source = config.age.secrets."git-signing.key.conf".path;
-          mode = "0644";
-        };
-
-        # Secret-provided ssh config snippet (client-only)
-        "agenix/ssh.d/github.conf" = mkIf (config.age.secrets ? "ssh-config.github.conf") {
-          source = config.age.secrets."ssh-config.github.conf".path;
-          mode = "0644";
-        };
+    {
+      system.activationScripts.secrets-verify = {
+        deps = [ "agenix" ];
+        text =
+          let
+            secrets = map (
+              name:
+              let
+                entry = builtins.getAttr name config.age.secrets;
+                path = entry.path;
+                expMode = lib.removePrefix "0" specs.${name}.agePerms.mode; # 0600 -> 600
+                expOwner = specs.${name}.agePerms.owner;
+              in
+              ''
+                if [ ! -s "${path}" ]; then
+                  echo "[secrets] ERROR: ${name} 未成功解密或为空：${path}" >&2
+                  exit 1
+                fi
+                set -- $(/run/current-system/sw/bin/stat -c '%a %U' "${path}")
+                actualMode="$1"; actualOwner="$2"
+                if [ "$actualMode" != "${expMode}" ] || [ "$actualOwner" != "${expOwner}" ]; then
+                  echo "[secrets] ERROR: ${name} 权限/所有者不匹配，期望 ${expOwner}:${expMode} 实际 $actualOwner:$actualMode（${path}）" >&2
+                  exit 1
+                fi
+              ''
+            ) names;
+          in
+          lib.concatStringsSep "\n" (
+            [
+              ''set -euo pipefail''
+            ]
+            ++ secrets
+          );
       };
     }
   ]);

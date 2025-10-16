@@ -16,7 +16,6 @@
       loginFile.source = ./nushell/login.nu;
       shellAliases = {
         cd = "z";
-        docker = "podman";
         j = "just";
         ls = "ls -afm";
         shinx = "sudo nix run /home/meandssh/shinx#activate";

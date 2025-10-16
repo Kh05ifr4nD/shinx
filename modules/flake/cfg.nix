@@ -1,10 +1,8 @@
 {
   user = {
     email = "meandSSH0219@gmail.com";
-    full-name = "Kh05ifr4nD";
+    full-name = "meandSSH0219";
     git-name = "Kh05ifr4nD";
-    gpg-key = null;
     name = "meandssh";
-    pub-key = null;
   };
 }
