@@ -1,5 +1,6 @@
 {
   flake,
+  lib,
   ...
 }:
 let

@@ -27,10 +27,17 @@
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    # 秘密
-    sops-nix.url = "github:Mic92/sops-nix";
     # 音频
     musnix.url = "github:musnix/musnix";
+    # 秘密
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mysecrets = {
+      url = "git+ssh://git@github.com/Kh05ifr4nD/seinx.git?shallow=1";
+      flake = false;
+    };
   };
   nixConfig = {
     substituters = [

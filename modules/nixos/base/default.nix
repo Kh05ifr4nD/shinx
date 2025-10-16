@@ -2,12 +2,14 @@
   arch,
   flake,
   host,
+  lib,
   pkgs,
   ...
 }:
 
 let
   inherit (flake) inputs;
+  inherit (inputs) self;
 in
 {
   environment = {
@@ -35,7 +37,7 @@ in
     map (f: ./${f}) (filter (f: f != "default.nix") (attrNames (readDir ./.)))
     ++ (with inputs; [
       nix-ld.nixosModules.nix-ld
-      sops-nix.nixosModules.sops
+      self.nixosModules.secrets
     ]);
   networking.hostName = host;
   nixpkgs.hostPlatform = arch;
@@ -156,6 +158,7 @@ in
       zlib
     ];
   };
-  services.openssh.enable = true;
+  services.openssh.enable = lib.mkDefault false;
+  modules.secrets.user.enable = lib.mkDefault true;
   system.stateVersion = "24.05";
 }

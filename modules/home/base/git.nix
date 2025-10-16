@@ -1,4 +1,9 @@
-{ flake, ... }:
+{
+  flake,
+  lib,
+  config,
+  ...
+}:
 let
   inherit (flake.config) user;
 in
@@ -27,7 +32,9 @@ in
       };
       userEmail = user.email;
       userName = user.git-name;
-      signing.key = user.gpg-key;
+      includes = [
+        { path = "/etc/agenix/git-signing.key.conf"; }
+      ];
     };
     gitui = {
       enable = true;
