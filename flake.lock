@@ -140,11 +140,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760392170,
-        "narHash": "sha256-WftxJgr2MeDDFK47fQKywzC72L2jRc/PWcyGdjaDzkw=",
+        "lastModified": 1760663237,
+        "narHash": "sha256-BflA6U4AM1bzuRMR8QqzPXqh8sWVCNDzOdsxXEguJIc=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "46d55f0aeb1d567a78223e69729734f3dca25a85",
+        "rev": "ca5b894d3e3e151ffc1db040b6ce4dcc75d31c37",
         "type": "github"
       },
       "original": {
@@ -202,11 +202,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760500983,
-        "narHash": "sha256-zfY4F4CpeUjTGgecIJZ+M7vFpwLc0Gm9epM/iMQd4w8=",
+        "lastModified": 1760662441,
+        "narHash": "sha256-mlDqR1Ntgs9uYYEAUR1IhamKBO0lxoNS4zGLzEZaY0A=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c53e65ec92f38d30e3c14f8d628ab55d462947aa",
+        "rev": "722792af097dff5790f1a66d271a47759f477755",
         "type": "github"
       },
       "original": {
@@ -236,10 +236,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1760598774,
-        "narHash": "sha256-4QvRqIkM9WNdZgGwQh80B7TEPzNgdyJ5Oo1rIFOySes=",
+        "lastModified": 1760685421,
+        "narHash": "sha256-ryr86Mu84XWNiOeaD/dYMkG3mQnxaEYen9edaCzqpZc=",
         "ref": "refs/heads/main",
-        "rev": "c2a423dd5074a12c42ac63517df4bbab71372c87",
+        "rev": "ddf0fea7dbcb5a33c9cb80d8a7324d17becbcd6a",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Kh05ifr4nD/seinx.git"
