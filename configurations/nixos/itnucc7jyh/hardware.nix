@@ -35,16 +35,31 @@
     };
   };
 
-  modules.network = {
-    defaultGateway = "192.168.115.1";
-    interfaces.eno1 = {
-      address = "192.168.115.63";
-      prefixLength = 24;
+  # 主机目前处于“无线中继/热点”环境，网关与网段变化大。
+  # 默认使用 NetworkManager + DHCP（由 modules/network 模块提供默认行为）。
+  # networking.defaultGateway 必须显式包含 interface 字段。
+  #
+  # modules.network = {
+  #   backend = "networkd"; # 可选：强制使用 systemd-networkd 作为后端
+  #   interfaces.eno1 = {
+  #     address = "192.168.115.63";
+  #     prefixLength = 24;
+  #   };
+  #   defaultGateway = { address = "192.168.115.224"; interface = "eno1"; };
+  #   nameservers = [ "192.168.115.224" "223.5.5.5" "119.29.29.29" ];
+  # };
+
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+      X11Forwarding = false;
     };
-    nameservers = [
-      "192.168.115.1"
-      "223.5.5.5"
-      "119.29.29.29"
-    ];
   };
+  users.users.meandssh.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIj+o1r7YJDYN7SEuDhP0fEqTAHZLa+4s+NxjvIZciYp"
+  ];
 }
