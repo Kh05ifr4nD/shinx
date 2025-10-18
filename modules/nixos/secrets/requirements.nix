@@ -37,16 +37,21 @@ in
     }
 
     (mkIf cfg.user.enable {
-      assertions = map (
-        name:
+      assertions =
         let
-          relPath = specs.${name}.relPath;
+          sshEnabled = (config.services.openssh.enable or false);
+          requiredNames = builtins.filter (name: name != "ssh-authorized-keys" || sshEnabled) names;
         in
-        {
-          assertion = hasMysecrets && builtins.pathExists (hostDirPath + relPath);
-          message = ''未找到 ${hostDirStr}${relPath}（密文：${name}），请在私密仓库提供对应密文文件'';
-        }
-      ) names;
+        map (
+          name:
+          let
+            relPath = specs.${name}.relPath;
+          in
+          {
+            assertion = hasMysecrets && builtins.pathExists (hostDirPath + relPath);
+            message = ''未找到 ${hostDirStr}${relPath}（密文：${name}），请在私密仓库提供对应密文文件'';
+          }
+        ) requiredNames;
     })
   ];
 }

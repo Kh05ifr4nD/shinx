@@ -15,6 +15,11 @@ let
   hostname = config.networking.hostName;
   mysecrets = inputs.mysecrets or null;
   userName = flakeConfig.user.name;
+  sshdUser =
+    if (config ? modules && config.modules ? sshd && config.modules.sshd ? user) then
+      config.modules.sshd.user
+    else
+      userName;
   specs = import ./specs.nix { inherit userName; };
   names = builtins.attrNames specs;
 in
@@ -69,12 +74,18 @@ in
       }
 
       {
-        age.secrets = builtins.listToAttrs (
-          map (name: {
-            name = name;
-            value = ({ file = hostDir + specs.${name}.relPath; } // specs.${name}.agePerms);
-          }) names
-        );
+        age.secrets =
+          let
+            presentNames = builtins.filter (
+              n: mysecrets != null && builtins.pathExists (hostDir + specs.${n}.relPath)
+            ) names;
+          in
+          builtins.listToAttrs (
+            map (name: {
+              name = name;
+              value = ({ file = hostDir + specs.${name}.relPath; } // specs.${name}.agePerms);
+            }) presentNames
+          );
       }
 
       (
@@ -116,6 +127,12 @@ in
             source = config.age.secrets."nix-access-tokens".path;
             mode = "0640";
             user = userName;
+          };
+
+          "ssh/authorized_keys.d/${sshdUser}" = mkIf (config.age.secrets ? "ssh-authorized-keys") {
+            source = config.age.secrets."ssh-authorized-keys".path;
+            mode = "0640";
+            user = "root";
           };
         };
       }

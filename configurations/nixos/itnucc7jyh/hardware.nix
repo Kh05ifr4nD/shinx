@@ -48,18 +48,4 @@
   #   defaultGateway = { address = "192.168.115.224"; interface = "eno1"; };
   #   nameservers = [ "192.168.115.224" "223.5.5.5" "119.29.29.29" ];
   # };
-
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";
-      X11Forwarding = false;
-    };
-  };
-  users.users.meandssh.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIj+o1r7YJDYN7SEuDhP0fEqTAHZLa+4s+NxjvIZciYp"
-  ];
 }

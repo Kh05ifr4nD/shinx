@@ -12,6 +12,7 @@ in
       base
       hardware
       network
+      sshd
     ]);
 
   _module.args = {

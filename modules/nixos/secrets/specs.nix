@@ -23,4 +23,13 @@
       owner = "root";
     };
   };
+
+  # Optional: only required when modules.sshd.enable = true (see requirements.nix).
+  "ssh-authorized-keys" = {
+    relPath = "/ssh/authorized_keys.age";
+    agePerms = {
+      mode = "0640";
+      owner = "root";
+    };
+  };
 }
