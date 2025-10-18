@@ -236,10 +236,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1760685421,
-        "narHash": "sha256-ryr86Mu84XWNiOeaD/dYMkG3mQnxaEYen9edaCzqpZc=",
+        "lastModified": 1760764818,
+        "narHash": "sha256-Dh4QBVXaBmKNvCg/5hd+l39JpyQdkfF08Z5/aJ3nsbY=",
         "ref": "refs/heads/main",
-        "rev": "ddf0fea7dbcb5a33c9cb80d8a7324d17becbcd6a",
+        "rev": "6e3b2926cecd8d480452cf5f9c2724a0b22c104e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Kh05ifr4nD/seinx.git"

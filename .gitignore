@@ -4,3 +4,6 @@
 /.direnv/
 result
 /.pre-commit-config.yaml
+
+# ignore private secrets repo directory
+seinx/
