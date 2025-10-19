@@ -13,6 +13,7 @@ in
       hardware
       network
       sshd
+      sgx
     ]);
 
   _module.args = {
