@@ -15,11 +15,11 @@ let
         patches = (old.patches or [ ]) ++ [ ];
         postPatch = (old.postPatch or "") + ''
           set -eu
-          find . -type f \( -name '*.c' -o -name '*.cc' -o -name '*.cpp' -o -name '*.cxx' -o -name '*.h' -o -name '*.hpp' -o -name '*.hh' \) |
+          # Only touch C++ sources/headers; avoid .c
+          find . -type f \( -name '*.cc' -o -name '*.cpp' -o -name '*.cxx' -o -name '*.hh' -o -name '*.hpp' -o -name '*.h' \) |
           while IFS= read -r f; do
-            if grep -qE '\\bstd::(min|max)\\b' "$f"; then
+            if grep -qE '\\bstd::(min|max|sort|upper_bound|lower_bound|remove|unique|max_element|min_element|clamp)\\b' "$f"; then
               if ! grep -qE '^\s*#\s*include\s*<algorithm>' "$f"; then
-                # Prepend to keep patch simple; PSW tolerates this ordering
                 sed -i '1i #include <algorithm>' "$f"
               fi
             fi
