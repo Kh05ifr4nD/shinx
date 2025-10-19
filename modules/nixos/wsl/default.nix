@@ -1,8 +1,4 @@
-{
-  flake,
-  lib,
-  ...
-}:
+{ flake, lib, ... }:
 let
   inherit (flake.config) user;
 in

@@ -11,9 +11,20 @@ in
   programs = {
     git = {
       enable = true;
+      gitui = {
+        enable = true;
+      };
       ignores = [
-        "*~"
+        ".#"
+        ".devenv/"
+        ".direnv/"
+        ".DS_Store"
+        "*.log"
+        "*.swo"
         "*.swp"
+        "~"
+        "result-*"
+        "result"
       ];
       includes = [
         { path = "/etc/agenix/git-signing.key.conf"; }
@@ -34,12 +45,11 @@ in
           push.autoSetupRemote = true;
           tag.gpgsign = true;
         };
-        userEmail = user.email;
-        userName = user.git-name;
+        user = {
+          email = user.email;
+          name = user.git-name;
+        };
       };
-    };
-    gitui = {
-      enable = true;
     };
   };
 }
