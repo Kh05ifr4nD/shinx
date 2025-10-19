@@ -11,6 +11,7 @@ in
     ++ (with self.nixosModules; [
       base
       hardware
+      kmscon
       network
       sshd
       sgx

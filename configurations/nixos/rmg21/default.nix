@@ -15,6 +15,7 @@ in
       fcitx5
       gui
       hardware
+      kmscon
       kde
       network
       nvidia
