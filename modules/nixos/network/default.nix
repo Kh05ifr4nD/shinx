@@ -93,6 +93,10 @@ in
       users.users.${user.name}.extraGroups = lib.mkAfter [ "networkmanager" ];
     })
 
+    (mkIf (!hasStatic && cfg.backend == "networkmanager" && cfg.nameservers != [ ]) {
+      networking.networkmanager.insertNameservers = cfg.nameservers;
+    })
+
     # Static IPs via systemd-networkd when interfaces are provided or backend forced
     (mkIf (hasStatic || (cfg.backend == "networkd" && !(config ? wsl && config.wsl.enable))) {
       networking = {
