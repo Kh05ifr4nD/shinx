@@ -125,13 +125,13 @@ in
           # Make nix access tokens available to the user if present
           "agenix/nix-access-tokens" = mkIf (config.age.secrets ? "nix-access-tokens") {
             source = config.age.secrets."nix-access-tokens".path;
-            mode = "0640";
+            mode = "0644";
             user = userName;
           };
 
           "ssh/authorized_keys.d/${sshdUser}" = mkIf (config.age.secrets ? "ssh-authorized-keys") {
             source = config.age.secrets."ssh-authorized-keys".path;
-            mode = "0640";
+            mode = "0644";
             user = "root";
           };
         };

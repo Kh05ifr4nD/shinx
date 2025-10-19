@@ -28,7 +28,7 @@
   "ssh-authorized-keys" = {
     relPath = "/ssh/authorized_keys.age";
     agePerms = {
-      mode = "0640";
+      mode = "0644";
       owner = "root";
     };
   };
