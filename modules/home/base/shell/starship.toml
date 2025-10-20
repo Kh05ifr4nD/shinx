@@ -21,7 +21,6 @@ style = "yellow"
 threshold = 100
 style = "green"
 
-
 [character]
 success_symbol = "[~>](bold blink green)"
 error_symbol = "[✗](bold blink red)"
@@ -44,12 +43,12 @@ disabled = false
 
 [shlvl]
 disabled = false
-threshold = -1
-symbol = '↕️'
+threshold = 2
+symbol = '↕'
 
 [sudo]
 style = 'bold green'
-symbol = '👩‍💻'
+symbol = '👩‍💻 '
 disabled = false
 
 [time]
