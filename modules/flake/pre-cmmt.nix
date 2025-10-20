@@ -1,7 +1,7 @@
 { ... }:
 {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       pre-commit = {
         check.enable = true;
@@ -28,17 +28,12 @@
               stages = [ "commit-msg" ];
             };
             end-of-file-fixer.enable = true;
-            trim-trailing-whitespace.enable = true;
             treefmt = {
               enable = true;
-              settings.formatters = with pkgs; [
-                just
-                nixfmt-rfc-style
-                shellcheck
-                taplo
-              ];
+              package = config.treefmt.build.wrapper;
               verbose = true;
             };
+            trim-trailing-whitespace.enable = true;
           };
         };
       };

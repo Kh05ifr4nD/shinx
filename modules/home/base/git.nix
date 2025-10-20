@@ -11,9 +11,6 @@ in
   programs = {
     git = {
       enable = true;
-      gitui = {
-        enable = true;
-      };
       ignores = [
         ".#"
         ".devenv/"
