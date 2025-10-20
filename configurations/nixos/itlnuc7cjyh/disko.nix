@@ -8,7 +8,7 @@ in
     disk = {
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/ata-Vaseky_V880_128GB_Z202506120972";
+        device = "/dev/disk/by-diskseq/1";
         content = {
           type = "gpt";
           partitions = {
