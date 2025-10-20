@@ -13,8 +13,8 @@ fmt:
 
 [group('nix')]
 updt:
-    nix flake update --commit-lock-file
-    git commit --amend -a
+    nix flake update
+    git commit -S -a
 
 [group('nix')]
 sw:
