@@ -26,6 +26,7 @@
       url = "github:Mic92/nix-ld";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-24_11.url = "github:NixOS/nixpkgs/nixos-24.11";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     # 音频
     musnix.url = "github:musnix/musnix";
