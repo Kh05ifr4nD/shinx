@@ -28,8 +28,7 @@ error_symbol = "[✗](bold blink red)"
 [directory]
 truncation_length = 10
 truncate_to_repo = true
-# Starship >=1.19: use read_only/read_only_style; no need to escape brackets
-format = '[$path]($style)[$read_only]($read_only_style)'
+format = '\[[$path]($style)[$read_only]($read_only_style)\]'
 
 [memory_usage]
 symbol = '💿'
@@ -55,7 +54,8 @@ disabled = false
 [time]
 time_format = "%T"
 format = "[🕙 $time]($style)"
-style = "bright-blue"
+# Use pure orange via hex, not yellow
+style = "#FFA500"
 disabled = false
 
 [username]
