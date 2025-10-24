@@ -9,6 +9,7 @@ let
   inherit (flake.config) user;
 in
 {
+  imports = [ ../nix-ld/desktop.nix ];
   # Home imports: route via modules.home.imports for consistency
   modules.home.imports = [ (flake.inputs.self + /configurations/home/gui) ];
 
