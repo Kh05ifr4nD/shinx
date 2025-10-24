@@ -20,8 +20,15 @@ in
       network
       nvidia
     ]);
-  # Home imports for GUI are configured per-host to avoid module→config coupling
-  modules.home.imports = [ (self + /configurations/home/gui) ];
+  # Home imports（按主机声明，使用 self.homeModules 与 NixOS 类似的 with 语法）
+  modules.home.imports = with self.homeModules; [
+    gui
+    apps.browser
+    apps.media
+    apps.office
+    apps.obs
+    apps.research
+  ];
   _module.args = {
     arch = "x86_64-linux";
     host = baseNameOf ./.;

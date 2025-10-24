@@ -21,6 +21,7 @@
       fuse
       fuse3
       gdk-pixbuf
+      gtk3
       glew110
       gst_all_1.gst-plugins-base
       gst_all_1.gst-plugins-ugly
