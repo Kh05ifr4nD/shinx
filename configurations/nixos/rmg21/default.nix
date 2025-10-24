@@ -22,11 +22,7 @@ in
     ]);
   modules.home.imports = with self.homeModules; [
     gui
-    apps.browser
-    apps.media
-    apps.office
-    apps.obs
-    apps.research
+    apps
   ];
   _module.args = {
     arch = "x86_64-linux";
