@@ -19,6 +19,7 @@ in
         (flake.inputs.self + /configurations/home/base)
       ]
       ++ (config.modules.home.imports or [ ]);
+      home.stateVersion = config.modules.home.stateVersion or "25.05";
     };
     # 将系统侧关于 secrets 的可用性传给 Home Manager，便于做降级处理
     extraSpecialArgs = {

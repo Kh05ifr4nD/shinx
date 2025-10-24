@@ -33,4 +33,5 @@ in
     host = baseNameOf ./.;
   };
   system.stateVersion = "25.05";
+  modules.home.stateVersion = "25.05";
 }
