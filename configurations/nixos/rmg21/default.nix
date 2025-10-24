@@ -20,7 +20,6 @@ in
       network
       nvidia
     ]);
-  # Home imports（按主机声明，使用 self.homeModules 与 NixOS 类似的 with 语法）
   modules.home.imports = with self.homeModules; [
     gui
     apps.browser

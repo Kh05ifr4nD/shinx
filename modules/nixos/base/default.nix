@@ -34,7 +34,6 @@ in
   nixpkgs.hostPlatform = arch;
   programs.nix-ld = {
     dev.enable = true;
-    # Minimal set for headless/WSL/server: keep common CLI dependencies only
     libraries = with pkgs; [
       bzip2
       curlWithGnuTls
@@ -60,5 +59,6 @@ in
   };
   services.openssh.enable = lib.mkDefault false;
   modules.secrets.user.enable = lib.mkDefault true;
-  system.stateVersion = "24.05";
+  # Temporary unified system state version; ideally per-host
+  system.stateVersion = "25.05";
 }

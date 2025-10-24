@@ -30,7 +30,6 @@ in
     })
 
     {
-      # Safe on SSDs and most environments; noop on HDDs.
       services.fstrim.enable = lib.mkDefault true;
     }
   ];

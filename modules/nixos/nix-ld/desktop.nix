@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-  # Desktop profile: full runtime set for Electron/GTK/Qt/multimedia apps
   programs.nix-ld = {
     dev.enable = true;
     libraries = with pkgs; [

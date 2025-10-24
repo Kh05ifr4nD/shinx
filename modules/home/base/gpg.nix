@@ -28,7 +28,6 @@
       allow-loopback-pinentry
     '';
     maxCacheTtl = 7200;
-    # Force Qt pinentry for any GUI; use curses on headless/TTY
     pinentry.package = lib.mkDefault (
       if (config.services.xserver.enable or false) then pkgs.pinentry-qt else pkgs.pinentry-curses
     );

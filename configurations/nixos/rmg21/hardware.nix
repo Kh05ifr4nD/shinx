@@ -61,9 +61,5 @@
       "windows_names"
     ];
   };
-  # Microcode + networking defaults are provided by modules:
-  # - modules.hardware.microcode.auto (default true)
-  # - modules.network (defaults to NetworkManager + DHCP)
-  # Keep host-specific overrides here only when deviating from module defaults.
   time.hardwareClockInLocalTime = true;
 }
