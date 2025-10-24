@@ -59,6 +59,4 @@ in
   };
   services.openssh.enable = lib.mkDefault false;
   modules.secrets.user.enable = lib.mkDefault true;
-  # Temporary unified system state version; ideally per-host
-  system.stateVersion = "25.05";
 }

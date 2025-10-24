@@ -11,7 +11,7 @@ in
   home = {
     homeDirectory = lib.mkDefault "/${if pkgs.stdenv.isDarwin then "Users" else "home"}/${user.name}";
     preferXdgDirectories = true;
-    stateVersion = "24.05";
+    stateVersion = "25.05";
     username = user.name;
   };
 

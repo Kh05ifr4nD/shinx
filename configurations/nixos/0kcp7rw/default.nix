@@ -13,4 +13,5 @@ in
     arch = "x86_64-linux";
     host = baseNameOf ./.;
   };
+  system.stateVersion = "25.05";
 }
