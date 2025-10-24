@@ -9,9 +9,9 @@ in
     base
     wsl
   ];
-  _module.args = {
+  modules.host = {
     arch = "aarch64-linux";
-    host = baseNameOf ./.;
+    name = baseNameOf ./.;
   };
   system.stateVersion = "25.05";
   modules.home.stateVersion = "25.05";

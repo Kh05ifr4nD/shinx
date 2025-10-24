@@ -1,9 +1,8 @@
 {
-  arch,
   flake,
-  host,
   lib,
   pkgs,
+  config,
   ...
 }:
 
@@ -30,8 +29,8 @@ in
       nix-ld.nixosModules.nix-ld
       self.nixosModules.secrets
     ]);
-  networking.hostName = host;
-  nixpkgs.hostPlatform = arch;
+  networking.hostName = config.modules.host.name;
+  nixpkgs.hostPlatform = config.modules.host.arch;
   programs.nix-ld = {
     dev.enable = true;
     libraries = with pkgs; [

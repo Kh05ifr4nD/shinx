@@ -24,9 +24,9 @@ in
     gui
     apps
   ];
-  _module.args = {
+  modules.host = {
     arch = "x86_64-linux";
-    host = baseNameOf ./.;
+    name = baseNameOf ./.;
   };
   system.stateVersion = "25.05";
   modules.home.stateVersion = "25.05";
