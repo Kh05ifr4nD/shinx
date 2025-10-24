@@ -10,21 +10,18 @@ let
 in
 {
   imports = [ ../nix-ld/desktop.nix ];
-  # Home imports: route via modules.home.imports for consistency
-  modules.home.imports = [ (flake.inputs.self + /configurations/home/gui) ];
+  # Home imports moved to per-host configurations to avoid module→config coupling
 
-  # Prefer the NixOS-side portal configuration to avoid HM duplication
+  # Wayland-only portal selection (no GNOME/GTK; wlroots/niri friendly)
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+    extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
     config.common.default = "*";
     xdgOpenUsePortal = true;
   };
 
   programs = {
-    dconf = {
-      enable = true;
-    };
+    # no dconf (GNOME) to avoid GTK/GNOME dependency footprint
     firefox = {
       preferences = {
         "widget.use-xdg-desktop-portal.file-picker" = 1;

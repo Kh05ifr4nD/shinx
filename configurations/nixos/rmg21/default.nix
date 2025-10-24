@@ -20,6 +20,8 @@ in
       network
       nvidia
     ]);
+  # Home imports for GUI are configured per-host to avoid module→config coupling
+  modules.home.imports = [ (self + /configurations/home/gui) ];
   _module.args = {
     arch = "x86_64-linux";
     host = baseNameOf ./.;
