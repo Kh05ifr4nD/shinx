@@ -15,21 +15,12 @@ in
   environment = {
     sessionVariables = {
       EDITOR = "hx";
-      NIXOS_OZONE_WL = "1";
     };
     systemPackages = with pkgs; [
-      bat
       curl
-      helix
-      nushell
-      ripgrep
-      kdePackages.breeze
-      kdePackages.qtwayland
-      qt6ct
       unzip
       wget
       xz
-      yazi
     ];
   };
   imports =

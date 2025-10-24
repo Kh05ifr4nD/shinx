@@ -1,14 +1,23 @@
-{ flake, pkgs, ... }:
+{
+  flake,
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   inherit (flake.config) user;
 in
 {
-  environment.systemPackages = with pkgs; [
-    kdePackages.xdg-desktop-portal-kde
-    xdg-desktop-portal
-  ];
-  home-manager.users.${user.name} = {
-    imports = [ (flake.inputs.self + /configurations/home/gui) ];
+  # Home imports: route via modules.home.imports for consistency
+  modules.home.imports = [ (flake.inputs.self + /configurations/home/gui) ];
+
+  # Prefer the NixOS-side portal configuration to avoid HM duplication
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+    config.common.default = "*";
+    xdgOpenUsePortal = true;
   };
 
   programs = {
@@ -25,7 +34,5 @@ in
       openFirewall = true;
     };
   };
-  services = {
-    v2raya.enable = true;
-  };
+  services.v2raya.enable = true;
 }

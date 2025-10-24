@@ -16,21 +16,5 @@ in
   };
 
   imports = with builtins; map (f: ./${f}) (filter (f: f != "default.nix") (attrNames (readDir ./.)));
-  xdg = {
-    enable = true;
-    portal = {
-      config = {
-        common = {
-          default = "*";
-        };
-      };
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-      ];
-      xdgOpenUsePortal = true;
-    };
-  };
-  xsession.numlock.enable = true;
+  xdg.enable = true;
 }
