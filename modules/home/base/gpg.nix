@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 {
   programs.gpg = {
     enable = true;
@@ -23,7 +28,10 @@
       allow-loopback-pinentry
     '';
     maxCacheTtl = 7200;
-    pinentry.package = pkgs.pinentry-gtk2;
+    # Force Qt pinentry for any GUI; use curses on headless/TTY
+    pinentry.package = lib.mkDefault (
+      if (config.services.xserver.enable or false) then pkgs.pinentry-qt else pkgs.pinentry-curses
+    );
 
   };
 }
