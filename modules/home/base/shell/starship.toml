@@ -54,7 +54,6 @@ disabled = false
 [time]
 time_format = "%T"
 format = "[🕙 $time]($style)"
-# Use pure orange via hex, not yellow
 style = "#FFA500"
 disabled = false
 
