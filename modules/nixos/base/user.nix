@@ -18,7 +18,7 @@ in
       imports = [
         (flake.inputs.self + /configurations/home/base)
       ]
-      ++ (config.modules.home.imports or [ ]);
+      ++ config.modules.home.imports;
       home.stateVersion = config.modules.home.stateVersion;
     };
     # 将系统侧关于 secrets 的可用性传给 Home Manager，便于做降级处理
