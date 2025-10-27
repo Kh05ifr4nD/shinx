@@ -25,8 +25,8 @@ in
       greetd = {
         enable = lib.mkDefault true;
         settings.default_session = {
-          command = lib.mkDefault "$HOME/.wayland-session";
-          user = lib.mkDefault user.name;
+          command = lib.mkForce "$HOME/.wayland-session";
+          user = lib.mkForce user.name;
         };
       };
     };
