@@ -35,6 +35,7 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri.url = "github:sodiboo/niri-flake";
     mysecrets = {
       url = "git+ssh://git@github.com/Kh05ifr4nD/seinx.git?shallow=1";
       flake = false;

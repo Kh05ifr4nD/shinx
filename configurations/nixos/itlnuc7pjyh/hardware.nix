@@ -1,0 +1,48 @@
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
+
+{
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+
+  boot = {
+    extraModulePackages = [ ];
+    initrd = {
+      availableKernelModules = [
+        "ahci"
+        "xhci_pci"
+        "usb_storage"
+        "usbhid"
+        "sd_mod"
+        "sdhci_pci"
+        "rtsx_pci_sdmmc"
+      ];
+      kernelModules = [ ];
+    };
+    kernelModules = [ "kvm-intel" ];
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+    };
+  };
+
+  # 主机目前处于“无线中继/热点”环境，网关与网段变化大。
+  # 默认使用 NetworkManager + DHCP（由 modules/network 模块提供默认行为）。
+  # networking.defaultGateway 必须显式包含 interface 字段。
+  #
+  # modules.network = {
+  #   backend = "networkd"; # 可选：强制使用 systemd-networkd 作为后端
+  #   interfaces.eno1 = {
+  #     address = "192.168.115.63";
+  #     prefixLength = 24;
+  #   };
+  #   defaultGateway = { address = "192.168.115.224"; interface = "eno1"; };
+  #   nameservers = [ "192.168.115.224" "223.5.5.5" "119.29.29.29" ];
+  # };
+}
