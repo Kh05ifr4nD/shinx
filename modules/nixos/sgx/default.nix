@@ -61,6 +61,17 @@ in
   };
 
   config = {
+    boot.kernelPackages = lib.mkForce (
+      pkgs.linuxPackagesFor (
+        pkgs.linux.override {
+          structuredExtraConfig = with pkgs.lib.kernel; [
+            (mkForce "X86_SGX" "y")
+            (mkForce "X86_SGX_KVM" "y")
+            (mkForce "X86_SGX2" "y")
+          ];
+        }
+      )
+    );
     nixpkgs.overlays = [ pswFixOverlay ];
 
     services.aesmd = {
