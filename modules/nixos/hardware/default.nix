@@ -1,6 +1,12 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   config = {
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     hardware = {
       cpu = {
         amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
