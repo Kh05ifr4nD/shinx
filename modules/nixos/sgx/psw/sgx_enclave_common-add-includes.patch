@@ -1,0 +1,10 @@
+diff --git a/psw/enclave_common/sgx_enclave_common.cpp b/psw/enclave_common/sgx_enclave_common.cpp
+--- a/psw/enclave_common/sgx_enclave_common.cpp
++++ b/psw/enclave_common/sgx_enclave_common.cpp
+@@ -34,6 +34,8 @@
+ #include <sys/types.h>
+ #include <dlfcn.h>
+ #include <map>
++#include <vector>
++#include <algorithm>
+ #include <functional>

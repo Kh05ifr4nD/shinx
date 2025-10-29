@@ -1,0 +1,15 @@
+--- a/sdk/edger8r/linux/Makefile
++++ b/sdk/edger8r/linux/Makefile
+@@ -37,7 +37,11 @@ all: build | $(BUILD_DIR)
+
+ .PHONY: build
+ build:
+-	ocamlbuild -cflags -ccopt,-fpie -lflags -runtime-variant,_pic,-ccopt,-pie,-ccopt -lflag "-Wl,-z,now"  -no-links -libs str,unix Edger8r.native
++	ocamlbuild \
++		-cflags -I,+str -cflags -I,+unix -cflags -ccopt,-fpie \
++		-lflags -I,+str -lflags -I,+unix -lflags -runtime-variant,_pic,-ccopt,-pie,-ccopt \
++		-lflag "-Wl,-z,now" \
++		-no-links -libs str,unix Edger8r.native
+
+ $(BUILD_DIR):
+ 	@$(MKDIR) $@

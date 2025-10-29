@@ -1,0 +1,24 @@
+diff --git a/psw/ae/aesm_service/source/CMakeLists.txt b/psw/ae/aesm_service/source/CMakeLists.txt
+--- a/psw/ae/aesm_service/source/CMakeLists.txt
++++ b/psw/ae/aesm_service/source/CMakeLists.txt
+@@ -30,7 +30,7 @@
+ #
+
+ # [proj-begin]
+-cmake_minimum_required(VERSION 3.0.0)
++cmake_minimum_required(VERSION 3.5)
+ project(ModularAESM VERSION 0.1.0)
+
+
+@@ -62,8 +62,8 @@
+ else()
+     message (FATAL_ERROR "Cannot find CppMicroServices")
+ endif()
+
+-set(CMAKE_CXX_STANDARD_REQUIRED 1)
+-set(CMAKE_CXX_STANDARD 14)
++set(CMAKE_CXX_STANDARD_REQUIRED 1)
++set(CMAKE_CXX_STANDARD 20)
+ set(CMAKE_SKIP_BUILD_RPATH true)
+
+ ########## SGX SDK Settings ##########

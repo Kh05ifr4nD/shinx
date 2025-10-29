@@ -10,27 +10,7 @@ let
   inherit (flake) inputs;
   cfg = config.modules.sgx;
   userName = flake.config.user.name;
-  pswFixOverlay = (
-    final: prev: {
-      sgx-psw = prev.sgx-psw.overrideAttrs (old: {
-        patches = (old.patches or [ ]);
-        postPatch = (old.postPatch or "") + ''
-          set -eu
-          f=psw/enclave_common/sgx_enclave_common.cpp
-          if [ -f "$f" ]; then
-            if ! grep -qE '^[[:space:]]*#[[:space:]]*include[[:space:]]*<algorithm>' "$f"; then
-              sed -i '1i #include <algorithm>' "$f"
-            fi
-          fi
-        '';
-        dontPatchShebangs = true;
-      });
-    }
-  );
-  pkgs2411 = import inputs.nixpkgs-24_11 {
-    inherit (pkgs) system;
-    overlays = [ pswFixOverlay ];
-  };
+  sgxPswLocal = pkgs.callPackage ./psw { };
 in
 {
   options.modules.sgx.aesmd.quoteProviderLibrary = mkOption {
@@ -41,10 +21,9 @@ in
 
   config = {
     hardware.cpu.intel.sgx.provision.enable = true;
-    nixpkgs.overlays = [ pswFixOverlay ];
     services.aesmd = {
       enable = true;
-      package = pkgs2411.sgx-psw;
+      package = sgxPswLocal;
     }
     // (optionalAttrs (cfg.aesmd.quoteProviderLibrary != null) {
       quoteProviderLibrary = cfg.aesmd.quoteProviderLibrary;
