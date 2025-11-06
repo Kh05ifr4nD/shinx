@@ -147,6 +147,14 @@ stdenv.mkDerivation rec {
         sdk/edger8r/linux/Util.ml
       sed -i '/| Ast\.PTPtr(atype, _) -> is_foreign_atype atype/{n;/| _                   -> (false, "")/d;}' \
         sdk/edger8r/linux/CodeGen.ml
+
+      # Ensure ocamlbuild uses Nix-provided ocaml toolchain, not host /usr.
+      ocamlcPath="${ocaml}/bin/ocamlc"
+      ocamloptPath="${ocaml}/bin/ocamlopt"
+      ocamllibPath="${ocaml}/lib/ocaml"
+      sed -i -E "s#(^[[:space:]]*)ocamlbuild[[:space:]]+#\\1OCAMLC=$ocamlcPath OCAMLOPT=$ocamloptPath OCAMLLIB=$ocamllibPath ocamlbuild #g" \
+        sdk/edger8r/linux/Makefile
+      sed -i -E "s#(ocamlbuild)([[:space:]]+)#\\1 -ocamlc $ocamlcPath -ocamlopt $ocamloptPath \\2#g" sdk/edger8r/linux/Makefile
     '';
 
   nativeBuildInputs = [
@@ -166,18 +174,14 @@ stdenv.mkDerivation rec {
     protobuf
   ];
 
+  hardeningDisable = [ "zerocallusedregs" ];
+
   dontUseCmakeConfigure = true;
-  enableParallelBuilding = true;
 
   preBuild = ''
     # Build `sgx_edger8r`, the enclave .edl -> .h file codegen tool.
-    # Then place it in `$SGX_SDK/bin` and `$SGX_SDK/bin/x64`. Use multiple
-    # jobs when available to avoid single-threaded bottlenecks during this step.
-    jobCount=''${NIX_BUILD_CORES:-1}
-    if [ "$jobCount" -le 0 ]; then
-      jobCount=1
-    fi
-    make -C sdk/edger8r/linux -j"$jobCount"
+    # Then place it in `$SGX_SDK/bin` and `$SGX_SDK/bin/x64`.
+    make -C sdk/edger8r/linux
     mkdir -p $SGX_SDK/bin/x64
     sgx_edger8r_bin="$(readlink -f build/linux/sgx_edger8r)"
     ln -s $sgx_edger8r_bin $SGX_SDK/bin/
