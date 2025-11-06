@@ -4,7 +4,7 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       lxgw-wenkai
-      nerd-fonts.caskaydia-cove
+      maple-mono.NF-CN
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       noto-fonts-extra
@@ -27,7 +27,7 @@
           "Source Han Sans"
           "Source Sans Pro"
         ];
-        monospace = [ "CascadiaMono" ];
+        monospace = [ "MapleMono-NF-CN" ];
       };
       enable = true;
       hinting = {
