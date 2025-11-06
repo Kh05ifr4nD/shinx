@@ -27,7 +27,7 @@
           "Source Han Sans"
           "Source Sans Pro"
         ];
-        monospace = [ "MapleMono-NF-CN" ];
+        monospace = [ "Maple Mono NF CN" ];
       };
       enable = true;
       hinting = {
