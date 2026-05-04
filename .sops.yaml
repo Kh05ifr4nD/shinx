@@ -1,0 +1,7 @@
+keys:
+  - &aa3448 age18a8ues2z4vf6l8kdu68smje2garpxuk3xmf7vnyye9dd7zpnef4q86z4uw
+creation_rules:
+  - path_regex: ^secrets/aa3448\.yaml$
+    key_groups:
+      - age:
+          - *aa3448

@@ -1,0 +1,99 @@
+lang: zh
+theme: auto
+color: default
+primaryColor: "#000"
+secondaryColor: "#545454"
+fontFamily: system-ui, "Microsoft YaHei UI", "Source Han Sans CN", "Twemoji
+  Mozilla", sans-serif
+profilesView: grid
+subscribesView: grid
+rulesetsView: grid
+pluginsView: grid
+scheduledtasksView: grid
+windowStartState: 2
+webviewGpuPolicy: 1
+contentProtection: true
+width: 1090
+height: 634
+exitOnClose: false
+closeKernelOnExit: true
+autoSetSystemProxy: true
+proxyBypassList: "*.local;169.254/16"
+autoStartKernel: true
+autoRestartKernel: false
+userAgent: ""
+startupDelay: 30
+connections:
+  visibility:
+    metadata.type: true
+    metadata.processPath: false
+    metadata.host: true
+    metadata.sourceIP: false
+    metadata.destinationIP: false
+    rule: true
+    chains: true
+    up: true
+    down: true
+    upload: true
+    download: true
+    start: true
+  order:
+    - metadata.type
+    - metadata.processPath
+    - metadata.host
+    - metadata.sourceIP
+    - metadata.destinationIP
+    - rule
+    - chains
+    - up
+    - down
+    - upload
+    - download
+    - start
+kernel:
+  realMemoryUsage: true
+  branch: main
+  profile: ID_1ghf3u72
+  autoClose: true
+  unAvailable: true
+  cardMode: true
+  cardColumns: 5
+  sortByDelay: true
+  testUrl: https://www.gstatic.com/generate_204
+  testTimeout: 5000
+  concurrencyLimit: 20
+  controllerCloseMode: all
+  controllerSensitivity: 2
+  main:
+    env: {}
+    args:
+      - run
+      - --disable-color
+      - -c
+      - $APP_BASE_PATH/$CORE_BASE_PATH/config.json
+      - -D
+      - $APP_BASE_PATH/$CORE_BASE_PATH
+  alpha:
+    env: {}
+    args:
+      - run
+      - --disable-color
+      - -c
+      - $APP_BASE_PATH/$CORE_BASE_PATH/config.json
+      - -D
+      - $APP_BASE_PATH/$CORE_BASE_PATH
+pluginSettings: {}
+githubApiToken: ""
+multipleInstance: false
+addPluginToMenu: false
+addGroupToMenu: false
+rollingRelease: false
+debugOutline: false
+debugNoAnimation: false
+debugNoRounded: false
+debugBorder: false
+pages:
+  - Overview
+  - Profiles
+  - Subscriptions
+  - Plugins

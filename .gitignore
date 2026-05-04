@@ -1,0 +1,13 @@
+.DS_Store
+**/*.log
+*.agekey
+*.key
+/.devenv/
+/.direnv/
+/.env
+/.env.*
+/.idea/
+/.pre-commit-config.yaml
+/keys.txt
+result
+result-*
