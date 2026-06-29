@@ -10,15 +10,22 @@ subscribesView: grid
 rulesetsView: grid
 pluginsView: grid
 scheduledtasksView: grid
-windowStartState: 2
+windowStartState: 0
 webviewGpuPolicy: 1
-contentProtection: true
-width: 1090
-height: 634
+contentProtection: false
+width: 1216
+height: 887
 exitOnClose: false
 closeKernelOnExit: true
 autoSetSystemProxy: true
+autoSetSystemDNS: true
+requestProxyMode: none
+customProxy: ""
 proxyBypassList: "*.local;169.254/16"
+systemProxyServices:
+  - Wi-Fi
+systemProxyDNS: ""
+systemDefaultDNS: ""
 autoStartKernel: true
 autoRestartKernel: false
 userAgent: ""
@@ -53,12 +60,12 @@ connections:
 kernel:
   realMemoryUsage: true
   branch: main
-  profile: ID_1ghf3u72
+  profile: ID_a83i8ggz
   autoClose: true
   unAvailable: true
   cardMode: true
   cardColumns: 5
-  sortByDelay: true
+  sortByDelay: false
   testUrl: https://www.gstatic.com/generate_204
   testTimeout: 5000
   concurrencyLimit: 20
@@ -82,8 +89,18 @@ kernel:
       - $APP_BASE_PATH/$CORE_BASE_PATH/config.json
       - -D
       - $APP_BASE_PATH/$CORE_BASE_PATH
+plugins:
+  sources:
+    - enable: true
+      name: General
+      url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/generic.json
+    - enable: true
+      name: GUI.for.SingBox
+      url: https://raw.githubusercontent.com/GUI-for-Cores/Plugin-Hub/main/plugins/gfs.json
 pluginSettings: {}
 githubApiToken: ""
+githubDownloadAcceleration: false
+githubDownloadMirror: ""
 multipleInstance: false
 addPluginToMenu: false
 addGroupToMenu: false
@@ -92,6 +109,7 @@ debugOutline: false
 debugNoAnimation: false
 debugNoRounded: false
 debugBorder: false
+debugUsePointer: true
 pages:
   - Overview
   - Profiles

@@ -1,14 +1,41 @@
-"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+#:schema https://yazi-rs.github.io/schemas/yazi.json
 
 [mgr]
+ratio = [1, 4, 3]
+sort_by = "alphabetical"
+sort_sensitive = true
+sort_reverse = false
+sort_dir_first = true
+sort_translit = false
+sort_fallback = "alphabetical"
 linemode = "size"
 show_hidden = true
-sort_sensitive = true
-title_format = "{cwd}"
-mouse_events = ["click", "drag", "scroll", "touch"]
+show_symlink = true
+scrolloff = 5
+mouse_events = ["click", "scroll", "drag", "touch"]
 
 [preview]
 wrap = "yes"
+tab_size = 2
+max_width = 600
+max_height = 900
+cache_dir = ""
+image_delay = 30
+image_filter = "triangle"
+image_quality = 75
+ueberzug_scale = 1
+ueberzug_offset = [0, 0, 0, 0]
+
+[tasks]
+file_workers = 3
+plugin_workers = 5
+fetch_workers = 5
+preload_workers = 2
+process_workers = 5
+bizarre_retry = 3
+image_alloc = 536870912
+image_bound = [10000, 10000]
+suppress_preload = false
 
 [input]
 cursor_blink = true

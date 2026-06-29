@@ -24,9 +24,10 @@
     yazi = with builtins; {
       enable = true;
       enableNushellIntegration = true;
+      flavors.catppuccin-mocha = ./yazi/catppuccin-mocha.yazi;
       settings = fromTOML (readFile ./yazi/yazi.toml);
       shellWrapperName = "y";
-      theme = fromTOML (readFile ./yazi/catppuccin-mocha.toml);
+      theme = fromTOML (readFile ./yazi/theme.toml);
     };
     zoxide = {
       enable = true;

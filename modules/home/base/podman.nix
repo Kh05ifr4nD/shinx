@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    podman
-    podman-compose
-  ];
+  home.packages = lib.mkIf pkgs.stdenv.isLinux (
+    with pkgs;
+    [
+      podman
+      podman-compose
+    ]
+  );
 }

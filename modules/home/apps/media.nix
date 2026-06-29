@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
-  home.packages = [ pkgs.vlc ];
+  home.packages = lib.mkIf (!pkgs.stdenv.isDarwin) [ pkgs.vlc ];
 }

@@ -16,15 +16,14 @@ in
   };
   services.kmscon = {
     enable = true;
-    extraConfig = "font-size=18";
+    config = {
+      font-name = "Maple Mono NF CN";
+      font-size = 18;
+    }
+    // lib.optionalAttrs config.hardware.graphics.enable {
+      hwaccel = true;
+    };
     extraOptions = "--xkb-layout=us";
-    fonts = [
-      {
-        name = "Maple Mono NF CN";
-        package = pkgs.maple-mono."NF-CN";
-      }
-    ];
-    hwRender = true;
   };
 
   systemd.services = {

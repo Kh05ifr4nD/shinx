@@ -5,30 +5,31 @@
   ...
 }:
 let
-  llmAgents = flake.inputs.llm-agents;
-  packages = llmAgents.packages or { };
+  coolheaded = flake.inputs.coolheaded;
+  packages = coolheaded.packages or { };
   packageNames = [
     "codex"
-    "gitnexus"
-    "oh-my-opencode"
-    "omp"
+    "entire"
     "opencode"
     "qmd"
+    "rtk"
   ];
   systemKey = pkgs.stdenv.hostPlatform.system;
   systemPackages = packages.${systemKey};
   agentPackages = map (name: systemPackages.${name}) packageNames;
-  desktopPackages = with pkgs; [
-    opencode-desktop
+  desktopPackages = lib.optionals (!pkgs.stdenv.isDarwin) (
+    with pkgs;
+    [
+      opencode-desktop
+    ]
+  );
+  localInferencePackages = [
+    pkgs.llama-cpp
+  ]
+  ++ lib.optionals (pkgs.stdenv.isDarwin && pkgs.stdenv.hostPlatform.isAarch64) [
+    pkgs.python3Packages.mlx-lm
   ];
 in
 {
-  nix.settings = {
-    extra-substituters = lib.mkAfter [ "https://cache.numtide.com" ];
-    extra-trusted-public-keys = lib.mkAfter [
-      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
-    ];
-  };
-
-  home.packages = agentPackages ++ desktopPackages;
+  home.packages = agentPackages ++ desktopPackages ++ localInferencePackages;
 }

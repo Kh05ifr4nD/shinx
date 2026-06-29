@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
-  home.packages = [ pkgs.obs-studio ];
+  home.packages = lib.mkIf (!pkgs.stdenv.isDarwin) [ pkgs.obs-studio ];
 }

@@ -15,6 +15,7 @@
         "https://cache.numtide.com"
         "https://cache.thalheim.io"
         "https://nix-community.cachix.org"
+        "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
       ];
       extra-trusted-public-keys = [
         "cache.thalheim.io-1:R7msbosLEZKrxk/lKxf9BTjOOH7Ax3H0Qj0/6wiHOgc="
@@ -23,9 +24,6 @@
       ];
       experimental-features = "nix-command flakes";
       show-trace = true;
-      substituters = [
-        "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
-      ];
     };
   };
   nixpkgs = {

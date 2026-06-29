@@ -30,24 +30,24 @@
       flake = false;
       url = "github:Brewforge/homebrew-chinese";
     };
-    llm-agents = {
+    homebrew-muxy-app-tap = {
+      flake = false;
+      url = "github:muxy-app/homebrew-tap";
+    };
+    coolheaded = {
       inputs = {
-        blueprint.inputs = {
-          nixpkgs.follows = "nixpkgs";
-          systems.follows = "systems";
-        };
         bun2nix.inputs = {
           flake-parts.follows = "flake-parts";
           nixpkgs.follows = "nixpkgs";
           systems.follows = "systems";
           treefmt-nix.follows = "treefmt-nix";
         };
-        flake-parts.follows = "flake-parts";
+        flakeParts.follows = "flake-parts";
+        gitHooksNix.follows = "git-hooks-nix";
         nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-        treefmt-nix.follows = "treefmt-nix";
+        treefmtNix.follows = "treefmt-nix";
       };
-      url = "github:numtide/llm-agents.nix";
+      url = "github:Kh05ifr4nD/coolheaded";
     };
     musnix = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -90,14 +90,12 @@
       "https://cache.numtide.com"
       "https://cache.thalheim.io"
       "https://nix-community.cachix.org"
+      "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
     ];
     extra-trusted-public-keys = [
       "cache.thalheim.io-1:R7msbosLEZKrxk/lKxf9BTjOOH7Ax3H0Qj0/6wiHOgc="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-    substituters = [
-      "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
     ];
     fallback = true;
   };

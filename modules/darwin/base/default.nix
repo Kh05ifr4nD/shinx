@@ -79,14 +79,12 @@ in
       "https://cache.numtide.com"
       "https://cache.thalheim.io"
       "https://nix-community.cachix.org"
+      "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
     ];
     extra-trusted-public-keys = [
       "cache.thalheim.io-1:R7msbosLEZKrxk/lKxf9BTjOOH7Ax3H0Qj0/6wiHOgc="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-    substituters = [
-      "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
     ];
     trusted-users = [
       user.name
@@ -250,8 +248,8 @@ in
           { app = "/System/Applications/Calendar.app"; }
           { app = "/Applications/Safari.app"; }
           { app = "/Applications/Codex.app"; }
-          { app = "/Users/${user.name}/Applications/Home Manager Apps/Visual Studio Code.app"; }
-          { app = "/Users/${user.name}/Applications/Home Manager Apps/Ghostty.app"; }
+          { app = "/Applications/Visual Studio Code.app"; }
+          { app = "/Applications/Ghostty.app"; }
           { app = "/System/Applications/System Settings.app"; }
         ];
         persistent-others = [
@@ -293,7 +291,7 @@ in
         ActuationStrength = 0;
         Clicking = true;
         DragLock = false;
-        Dragging = false;
+        Dragging = true;
         FirstClickThreshold = 1;
         ForceSuppressed = false;
         SecondClickThreshold = 2;
@@ -306,9 +304,9 @@ in
         TrackpadRightClick = true;
         TrackpadRotate = true;
         TrackpadThreeFingerDrag = true;
-        TrackpadThreeFingerHorizSwipeGesture = 2;
+        TrackpadThreeFingerHorizSwipeGesture = 0;
         TrackpadThreeFingerTapGesture = 0;
-        TrackpadThreeFingerVertSwipeGesture = 2;
+        TrackpadThreeFingerVertSwipeGesture = 0;
         TrackpadTwoFingerDoubleTapGesture = true;
         TrackpadTwoFingerFromRightEdgeSwipeGesture = 3;
       };

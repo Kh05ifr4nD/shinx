@@ -1,10 +1,12 @@
 {
   config,
+  flake,
   lib,
   pkgs,
   ...
 }:
 let
+  proxyEnv = import (flake.inputs.self + /modules/proxy-env.nix) { inherit lib; };
   darwinPath = [
     "${config.home.homeDirectory}/.nix-profile/bin"
     "${config.home.profileDirectory}/bin"
@@ -20,6 +22,8 @@ let
   ];
 in
 {
+  home.sessionVariables = proxyEnv;
+
   programs = {
     atuin = {
       enable = true;
@@ -34,6 +38,7 @@ in
       configFile.source = ./nushell/config.nu;
       enable = true;
       envFile.source = ./nushell/env.nu;
+      environmentVariables = proxyEnv;
       extraEnv = lib.optionalString pkgs.stdenv.isDarwin ''
         $env.PATH = ${lib.hm.nushell.toNushell { } darwinPath}
       '';

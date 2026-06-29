@@ -35,7 +35,6 @@ let
       github.vscode-github-actions
       janisdd.vscode-edit-csv
       jnoortheen.nix-ide
-      katsute.code-background
       kisstkondoros.vscode-gutter-preview
       mechatroner.rainbow-csv
       mhutchie.git-graph
@@ -60,6 +59,7 @@ let
       zh9528.file-size
     ]
     ++ [
+      marketplaceUniversal.katsute.code-background
       pkgs.vscode-extensions.ms-ceintl.vscode-language-pack-zh-hans
     ];
 
@@ -67,7 +67,7 @@ let
     "[xml]" = {
       "editor.defaultFormatter" = "redhat.vscode-xml";
     };
-    "dev.containers.dockerPath" = "podman";
+    "dev.containers.dockerPath" = if pkgs.stdenv.isDarwin then "docker" else "podman";
     "diffEditor.ignoreTrimWhitespace" = false;
     "editor.foldingImportsByDefault" = true;
     "editor.fontFamily" = "\"Maple Mono NF CN\", \"Noto Color Emoji\"";
@@ -206,7 +206,7 @@ in
   programs.vscode = {
     enable = true;
     mutableExtensionsDir = false;
-    package = pkgs.vscode;
+    package = if pkgs.stdenv.hostPlatform.isDarwin then null else pkgs.vscode;
 
     profiles = {
       "C++" = {

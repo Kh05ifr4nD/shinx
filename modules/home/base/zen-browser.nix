@@ -1,5 +1,8 @@
 {
   flake,
+  config,
+  lib,
+  pkgs,
   ...
 }:
 
@@ -10,6 +13,7 @@
 
   programs.zen-browser = {
     enable = true;
+    package = lib.mkIf pkgs.stdenv.isDarwin null;
 
     policies = {
       DisableAppUpdate = true;
@@ -19,7 +23,11 @@
       DisableTelemetry = true;
       DontCheckDefaultBrowser = true;
       NoDefaultBookmarks = true;
-      OfferToSaveLogins = false;
+      OfferToSaveLogins = true;
+      RequestedLocales = [
+        "zh-CN"
+        "en-US"
+      ];
     };
 
     profiles.default = {
@@ -28,8 +36,18 @@
       settings = {
         "browser.shell.checkDefaultBrowser" = false;
         "browser.tabs.warnOnClose" = false;
+        "intl.accept_languages" = "zh-CN, zh, en-US, en";
+        "intl.locale.requested" = "zh-CN";
+        "signon.rememberSignons" = true;
         "zen.welcome-screen.seen" = true;
       };
     };
   };
+
+  # Per-install profile key for the stable Home Manager app symlink.
+  home.file."${config.home.homeDirectory}/Library/Application Support/Zen/installs.ini".text = ''
+    [A5AEE217BC1DA2A6]
+    Default=Profiles/default
+    Locked=1
+  '';
 }

@@ -9,36 +9,34 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "*" = {
-        addKeysToAgent = "yes";
-        controlMaster = "auto";
-        controlPath = "~/.ssh/master-%r@%n:%p";
-        controlPersist = "10m";
-        forwardAgent = false;
-        hashKnownHosts = false;
-        serverAliveCountMax = 3;
-        serverAliveInterval = 0;
+        AddKeysToAgent = "yes";
+        ControlMaster = "auto";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "10m";
+        ForwardAgent = false;
+        HashKnownHosts = false;
+        ServerAliveCountMax = 3;
+        ServerAliveInterval = 0;
       };
       "github.com" = {
-        hostname = "github.com";
-        identitiesOnly = true;
-        identityFile = [ "/run/secrets/ssh/githubPrivateKey" ];
-        user = "git";
+        HostName = "github.com";
+        IdentitiesOnly = true;
+        IdentityFile = [ "/run/secrets/ssh/githubPrivateKey" ];
+        User = "git";
       };
       "tdx" = {
-        controlMaster = "no";
-        controlPath = "none";
-        controlPersist = "no";
-        extraOptions = {
-          PasswordAuthentication = "no";
-          PreferredAuthentications = "publickey";
-        };
-        hostname = "100.64.89.99";
-        identitiesOnly = true;
-        identityFile = [ "~/.ssh/id_ed25519_${hostName}" ];
-        port = 32226;
-        user = "ryh";
+        ControlMaster = "no";
+        ControlPath = "none";
+        ControlPersist = "no";
+        HostName = "100.64.89.99";
+        IdentitiesOnly = true;
+        IdentityFile = [ "~/.ssh/id_ed25519_${hostName}" ];
+        PasswordAuthentication = "no";
+        Port = 32226;
+        PreferredAuthentications = "publickey";
+        User = "ryh";
       };
     };
   };
