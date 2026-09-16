@@ -1,5 +1,5 @@
-- id: ID_a83i8ggz
-  name: ssrdog
+- id: ID_ikuuu001
+  name: ikuuu
   log:
     disabled: false
     level: info
@@ -54,14 +54,14 @@
         stack: mixed
   outbounds:
     - id: outbound-select
-      tag: 🚀 节点选择
+      tag: "\U0001F680 节点选择"
       type: selector
       outbounds:
         - id: outbound-urltest
           type: Built-in
-          tag: 🎈 自动选择
-        - id: ID_aew67zoo
-          tag: ID_aew67zoo
+          tag: "\U0001F388 自动选择"
+        - id: ID_gfq3ngy9
+          tag: ID_gfq3ngy9
           type: Subscription
       interrupt_exist_connections: true
       url: ""
@@ -72,11 +72,11 @@
       icon: ""
       hidden: false
     - id: outbound-urltest
-      tag: 🎈 自动选择
+      tag: "\U0001F388 自动选择"
       type: urltest
       outbounds:
-        - id: ID_aew67zoo
-          tag: ID_aew67zoo
+        - id: ID_gfq3ngy9
+          tag: ID_gfq3ngy9
           type: Subscription
       interrupt_exist_connections: true
       url: https://www.gstatic.com/generate_204
@@ -87,7 +87,7 @@
       icon: ""
       hidden: false
     - id: outbound-direct
-      tag: 🎯 全球直连
+      tag: "\U0001F3AF 全球直连"
       type: selector
       outbounds:
         - id: direct
@@ -105,7 +105,7 @@
       icon: ""
       hidden: false
     - id: outbound-block
-      tag: 🛑 全球拦截
+      tag: "\U0001F6D1 全球拦截"
       type: selector
       outbounds:
         - id: block
@@ -123,15 +123,15 @@
       icon: ""
       hidden: false
     - id: outbound-fallback
-      tag: 🐟 漏网之鱼
+      tag: "\U0001F41F 漏网之鱼"
       type: selector
       outbounds:
         - id: outbound-select
           type: Built-in
-          tag: 🚀 节点选择
+          tag: "\U0001F680 节点选择"
         - id: outbound-direct
           type: Built-in
-          tag: 🎯 全球直连
+          tag: "\U0001F3AF 全球直连"
       interrupt_exist_connections: true
       url: ""
       interval: 3m
@@ -146,19 +146,19 @@
       outbounds:
         - id: outbound-select
           type: Built-in
-          tag: 🚀 节点选择
+          tag: "\U0001F680 节点选择"
         - id: outbound-urltest
           type: Built-in
-          tag: 🎈 自动选择
+          tag: "\U0001F388 自动选择"
         - id: outbound-direct
           type: Built-in
-          tag: 🎯 全球直连
+          tag: "\U0001F3AF 全球直连"
         - id: outbound-block
           type: Built-in
-          tag: 🛑 全球拦截
+          tag: "\U0001F6D1 全球拦截"
         - id: outbound-fallback
           type: Built-in
-          tag: 🐟 漏网之鱼
+          tag: "\U0001F41F 漏网之鱼"
       interrupt_exist_connections: true
       url: ""
       interval: 3m
@@ -532,8 +532,8 @@
       const onGenerate = async (config) => {
         return config
       }
-- id: ID_fitzikes
-  name: linkcube
+- id: ID_acebgp01
+  name: acebgp
   log:
     disabled: false
     level: info
@@ -553,7 +553,7 @@
     cache_file:
       enabled: true
       path: cache.db
-      cache_id: ID_hyr5lvjk
+      cache_id: ID_acebgp_cache
       store_fakeip: true
       store_rdrc: true
       rdrc_timeout: 7d
@@ -588,14 +588,14 @@
         stack: mixed
   outbounds:
     - id: outbound-select
-      tag: 🚀 节点选择
+      tag: "\U0001F680 节点选择"
       type: selector
       outbounds:
         - id: outbound-urltest
           type: Built-in
-          tag: 🎈 自动选择
-        - id: ID_d52yd71h
-          tag: ID_d52yd71h
+          tag: "\U0001F388 自动选择"
+        - id: ID_acebgp001
+          tag: ID_acebgp001
           type: Subscription
       interrupt_exist_connections: true
       url: ""
@@ -606,11 +606,11 @@
       icon: ""
       hidden: false
     - id: outbound-urltest
-      tag: 🎈 自动选择
+      tag: "\U0001F388 自动选择"
       type: urltest
       outbounds:
-        - id: ID_d52yd71h
-          tag: ID_d52yd71h
+        - id: ID_acebgp001
+          tag: ID_acebgp001
           type: Subscription
       interrupt_exist_connections: true
       url: https://www.gstatic.com/generate_204
@@ -621,7 +621,7 @@
       icon: ""
       hidden: false
     - id: outbound-direct
-      tag: 🎯 全球直连
+      tag: "\U0001F3AF 全球直连"
       type: selector
       outbounds:
         - id: direct
@@ -639,7 +639,7 @@
       icon: ""
       hidden: false
     - id: outbound-block
-      tag: 🛑 全球拦截
+      tag: "\U0001F6D1 全球拦截"
       type: selector
       outbounds:
         - id: block
@@ -657,15 +657,15 @@
       icon: ""
       hidden: false
     - id: outbound-fallback
-      tag: 🐟 漏网之鱼
+      tag: "\U0001F41F 漏网之鱼"
       type: selector
       outbounds:
         - id: outbound-select
           type: Built-in
-          tag: 🚀 节点选择
+          tag: "\U0001F680 节点选择"
         - id: outbound-direct
           type: Built-in
-          tag: 🎯 全球直连
+          tag: "\U0001F3AF 全球直连"
       interrupt_exist_connections: true
       url: ""
       interval: 3m
@@ -680,19 +680,563 @@
       outbounds:
         - id: outbound-select
           type: Built-in
-          tag: 🚀 节点选择
+          tag: "\U0001F680 节点选择"
         - id: outbound-urltest
           type: Built-in
-          tag: 🎈 自动选择
+          tag: "\U0001F388 自动选择"
         - id: outbound-direct
           type: Built-in
-          tag: 🎯 全球直连
+          tag: "\U0001F3AF 全球直连"
         - id: outbound-block
           type: Built-in
-          tag: 🛑 全球拦截
+          tag: "\U0001F6D1 全球拦截"
         - id: outbound-fallback
           type: Built-in
-          tag: 🐟 漏网之鱼
+          tag: "\U0001F41F 漏网之鱼"
+      interrupt_exist_connections: true
+      url: ""
+      interval: 3m
+      tolerance: 150
+      include: ""
+      exclude: ""
+      icon: ""
+      hidden: false
+  route:
+    rules:
+      - id: ID_zxgpk91u
+        type: inbound
+        payload: tun-in
+        enable: true
+        invert: false
+        action: sniff
+        outbound: ""
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_24x2alzr
+        type: protocol
+        enable: true
+        payload: dns
+        invert: false
+        action: hijack-dns
+        outbound: ""
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_lawgnsm6
+        type: clash_mode
+        payload: direct
+        enable: true
+        invert: false
+        action: route
+        outbound: outbound-direct
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_yvkyzo7p
+        type: clash_mode
+        enable: true
+        payload: global
+        invert: false
+        action: route
+        outbound: outbound-global
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: InsertionPoint
+        type: InsertionPoint
+        enable: true
+        payload: ""
+        invert: false
+        action: route
+        outbound: ""
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_0j9bo9d4
+        type: network
+        enable: true
+        payload: icmp
+        invert: false
+        action: route
+        outbound: outbound-direct
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_n9npgnm1
+        type: protocol
+        enable: true
+        payload: quic
+        invert: false
+        action: route
+        outbound: outbound-block
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_8ldqv6xy
+        type: rule_set
+        enable: true
+        payload: Category-Ads
+        invert: false
+        action: route
+        outbound: outbound-block
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_vwzr1qe7
+        type: rule_set
+        enable: true
+        payload: GeoSite-Private
+        invert: false
+        action: route
+        outbound: outbound-direct
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_y8jbmfnn
+        type: rule_set
+        enable: true
+        payload: GeoSite-CN
+        invert: false
+        action: route
+        outbound: outbound-direct
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_prsmz61r
+        type: rule_set
+        enable: true
+        payload: GeoIP-Private
+        invert: false
+        action: route
+        outbound: outbound-direct
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_79kofoas
+        type: rule_set
+        enable: true
+        payload: GeoIP-CN
+        invert: false
+        action: route
+        outbound: outbound-direct
+        sniffer: []
+        strategy: default
+        server: ""
+      - id: ID_iegg1cow
+        type: rule_set
+        enable: true
+        payload: GeoLocation-!CN
+        invert: false
+        action: route
+        outbound: outbound-select
+        sniffer: []
+        strategy: default
+        server: ""
+    rule_set:
+      - id: Category-Ads
+        type: remote
+        tag: Category-Ads
+        format: binary
+        url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs
+        download_detour: outbound-direct
+        update_interval: ""
+        rules: ""
+        path: ""
+      - id: GeoIP-Private
+        type: remote
+        tag: GeoIP-Private
+        format: binary
+        url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs
+        download_detour: outbound-direct
+        update_interval: ""
+        rules: ""
+        path: ""
+      - id: GeoSite-Private
+        type: remote
+        tag: GeoSite-Private
+        format: binary
+        url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs
+        download_detour: outbound-direct
+        update_interval: ""
+        rules: ""
+        path: ""
+      - id: GeoIP-CN
+        type: remote
+        tag: GeoIP-CN
+        format: binary
+        url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs
+        download_detour: outbound-direct
+        update_interval: ""
+        rules: ""
+        path: ""
+      - id: GeoSite-CN
+        type: remote
+        tag: GeoSite-CN
+        format: binary
+        url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs
+        download_detour: outbound-direct
+        update_interval: ""
+        rules: ""
+        path: ""
+      - id: GeoLocation-!CN
+        type: remote
+        tag: GeoLocation-!CN
+        format: binary
+        url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs
+        download_detour: outbound-direct
+        update_interval: ""
+        rules: ""
+        path: ""
+    auto_detect_interface: true
+    default_interface: ""
+    final: outbound-fallback
+    find_process: false
+    default_domain_resolver:
+      server: Local-DNS
+      client_subnet: ""
+  dns:
+    servers:
+      - id: Fake-IP
+        tag: Fake-IP
+        detour: ""
+        type: fakeip
+        domain_resolver: ""
+        server: ""
+        server_port: ""
+        path: ""
+        interface: ""
+        inet4_range: 198.18.0.0/15
+        inet6_range: fc00::/18
+        hosts_path: []
+        predefined: {}
+      - id: Local-DNS
+        tag: Local-DNS
+        detour: ""
+        type: https
+        domain_resolver: Local-DNS-Resolver
+        server: 223.5.5.5
+        server_port: "443"
+        path: /dns-query
+        interface: ""
+        inet4_range: ""
+        inet6_range: ""
+        hosts_path: []
+        predefined: {}
+      - id: Local-DNS-Resolver
+        tag: Local-DNS-Resolver
+        detour: ""
+        type: udp
+        domain_resolver: ""
+        server: 223.5.5.5
+        server_port: "53"
+        path: ""
+        interface: ""
+        inet4_range: ""
+        inet6_range: ""
+        hosts_path: []
+        predefined: {}
+      - id: Remote-DNS
+        tag: Remote-DNS
+        detour: outbound-select
+        type: tls
+        domain_resolver: Remote-DNS-Resolver
+        server: 8.8.8.8
+        server_port: "853"
+        path: ""
+        interface: ""
+        inet4_range: ""
+        inet6_range: ""
+        hosts_path: []
+        predefined: {}
+      - id: Remote-DNS-Resolver
+        tag: Remote-DNS-Resolver
+        detour: outbound-select
+        type: udp
+        domain_resolver: ""
+        server: 8.8.8.8
+        server_port: "53"
+        path: ""
+        interface: ""
+        inet4_range: ""
+        inet6_range: ""
+        hosts_path: []
+        predefined: {}
+    rules:
+      - id: ID_vo18ck4o
+        type: clash_mode
+        enable: true
+        payload: direct
+        action: route
+        server: Local-DNS
+        invert: false
+        strategy: default
+        disable_cache: false
+        client_subnet: ""
+      - id: ID_u7w41tq1
+        type: clash_mode
+        enable: true
+        payload: global
+        action: route
+        server: Remote-DNS
+        invert: false
+        strategy: default
+        disable_cache: false
+        client_subnet: ""
+      - id: InsertionPoint
+        type: InsertionPoint
+        enable: true
+        payload: ""
+        action: route
+        server: ""
+        invert: false
+        strategy: default
+        disable_cache: false
+        client_subnet: ""
+      - id: ID_2uxcp6x4
+        type: rule_set
+        enable: true
+        payload: GeoSite-CN
+        action: route
+        server: Local-DNS
+        invert: false
+        strategy: default
+        disable_cache: false
+        client_subnet: ""
+      - id: ID_gvsgjgy7
+        type: inline
+        enable: false
+        payload: |-
+          {
+            "__is_fake_ip": true,
+            "type": "logical",
+            "mode": "and",
+            "rules": [
+              {
+                "domain_suffix": [
+                  ".lan",
+                  ".localdomain",
+                  ".example",
+                  ".invalid",
+                  ".localhost",
+                  ".test",
+                  ".local",
+                  ".home.arpa",
+                  ".msftconnecttest.com",
+                  ".msftncsi.com"
+                ],
+                "invert": true
+              },
+              {
+                "query_type": [
+                  "A",
+                  "AAAA"
+                ]
+              }
+            ]
+          }
+        action: route
+        server: Fake-IP
+        invert: false
+        strategy: default
+        disable_cache: false
+        client_subnet: ""
+      - id: ID_4vo85y0j
+        type: rule_set
+        enable: true
+        payload: GeoLocation-!CN
+        action: route
+        server: Remote-DNS
+        invert: false
+        strategy: default
+        disable_cache: false
+        client_subnet: ""
+    disable_cache: false
+    disable_expire: false
+    independent_cache: false
+    client_subnet: ""
+    final: Remote-DNS
+    strategy: default
+  mixin:
+    priority: mixin
+    format: json
+    config: ""
+  script:
+    code: |-
+      const onGenerate = async (config) => {
+        const cidr = "192.220.52.233/32"
+        const rules = config.route?.rules || []
+        if (!rules.some((rule) => (rule.ip_cidr || []).includes(cidr))) {
+          const idx = rules.findIndex((rule) => rule.action === "hijack-dns")
+          rules.splice(idx >= 0 ? idx + 1 : 0, 0, {
+            action: "route",
+            ip_cidr: [cidr],
+            outbound: "🎯 全球直连",
+          })
+        }
+        return config
+      }
+- id: ID_flower01
+  name: flowerCloud
+  log:
+    disabled: false
+    level: info
+    output: ""
+    timestamp: false
+  experimental:
+    clash_api:
+      external_controller: 127.0.0.1:20123
+      external_ui: ""
+      external_ui_download_url: ""
+      external_ui_download_detour: outbound-direct
+      secret: ""
+      default_mode: rule
+      access_control_allow_origin:
+        - "*"
+      access_control_allow_private_network: false
+    cache_file:
+      enabled: true
+      path: cache.db
+      cache_id: ID_5ihjoyq1
+      store_fakeip: true
+      store_rdrc: true
+      rdrc_timeout: 7d
+  inbounds:
+    - id: mixed-in
+      type: mixed
+      tag: mixed-in
+      enable: true
+      mixed:
+        listen:
+          listen: 127.0.0.1
+          listen_port: 20122
+          tcp_fast_open: false
+          tcp_multi_path: false
+          udp_fragment: false
+        users: []
+    - id: tun-in
+      type: tun
+      tag: tun-in
+      enable: false
+      tun:
+        interface_name: ""
+        address:
+          - 172.18.0.1/30
+          - fdfe:dcba:9876::1/126
+        mtu: 0
+        auto_route: true
+        strict_route: true
+        route_address: []
+        route_exclude_address: []
+        endpoint_independent_nat: false
+        stack: mixed
+  outbounds:
+    - id: outbound-select
+      tag: "\U0001F680 节点选择"
+      type: selector
+      outbounds:
+        - id: outbound-urltest
+          type: Built-in
+          tag: "\U0001F388 自动选择"
+        - id: ID_zgkgl9eb
+          tag: ID_zgkgl9eb
+          type: Subscription
+      interrupt_exist_connections: true
+      url: ""
+      interval: 3m
+      tolerance: 150
+      include: ""
+      exclude: ""
+      icon: ""
+      hidden: false
+    - id: outbound-urltest
+      tag: "\U0001F388 自动选择"
+      type: urltest
+      outbounds:
+        - id: ID_zgkgl9eb
+          tag: ID_zgkgl9eb
+          type: Subscription
+      interrupt_exist_connections: true
+      url: https://www.gstatic.com/generate_204
+      interval: 3m
+      tolerance: 150
+      include: ""
+      exclude: ""
+      icon: ""
+      hidden: false
+    - id: outbound-direct
+      tag: "\U0001F3AF 全球直连"
+      type: selector
+      outbounds:
+        - id: direct
+          type: Built-in
+          tag: direct
+        - id: block
+          type: Built-in
+          tag: block
+      interrupt_exist_connections: true
+      url: ""
+      interval: 3m
+      tolerance: 150
+      include: ""
+      exclude: ""
+      icon: ""
+      hidden: false
+    - id: outbound-block
+      tag: "\U0001F6D1 全球拦截"
+      type: selector
+      outbounds:
+        - id: block
+          type: Built-in
+          tag: block
+        - id: direct
+          type: Built-in
+          tag: direct
+      interrupt_exist_connections: true
+      url: ""
+      interval: 3m
+      tolerance: 150
+      include: ""
+      exclude: ""
+      icon: ""
+      hidden: false
+    - id: outbound-fallback
+      tag: "\U0001F41F 漏网之鱼"
+      type: selector
+      outbounds:
+        - id: outbound-select
+          type: Built-in
+          tag: "\U0001F680 节点选择"
+        - id: outbound-direct
+          type: Built-in
+          tag: "\U0001F3AF 全球直连"
+      interrupt_exist_connections: true
+      url: ""
+      interval: 3m
+      tolerance: 150
+      include: ""
+      exclude: ""
+      icon: ""
+      hidden: false
+    - id: outbound-global
+      tag: GLOBAL
+      type: selector
+      outbounds:
+        - id: outbound-select
+          type: Built-in
+          tag: "\U0001F680 节点选择"
+        - id: outbound-urltest
+          type: Built-in
+          tag: "\U0001F388 自动选择"
+        - id: outbound-direct
+          type: Built-in
+          tag: "\U0001F3AF 全球直连"
+        - id: outbound-block
+          type: Built-in
+          tag: "\U0001F6D1 全球拦截"
+        - id: outbound-fallback
+          type: Built-in
+          tag: "\U0001F41F 漏网之鱼"
       interrupt_exist_connections: true
       url: ""
       interval: 3m

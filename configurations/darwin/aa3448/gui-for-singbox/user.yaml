@@ -3,8 +3,7 @@ theme: auto
 color: default
 primaryColor: "#000"
 secondaryColor: "#545454"
-fontFamily: system-ui, "Microsoft YaHei UI", "Source Han Sans CN", "Twemoji
-  Mozilla", sans-serif
+fontFamily: system-ui, "Microsoft YaHei UI", "Source Han Sans CN", "Twemoji Mozilla", sans-serif
 profilesView: grid
 subscribesView: grid
 rulesetsView: grid
@@ -21,7 +20,7 @@ autoSetSystemProxy: true
 autoSetSystemDNS: true
 requestProxyMode: none
 customProxy: ""
-proxyBypassList: "*.local;169.254/16"
+proxyBypassList: "*.local;169.254/16;*.apple.com;*.icloud.com;*.apple-cloudkit.com;*.cdn-apple.com"
 systemProxyServices:
   - Wi-Fi
 systemProxyDNS: ""
@@ -60,7 +59,7 @@ connections:
 kernel:
   realMemoryUsage: true
   branch: main
-  profile: ID_a83i8ggz
+  profile: ID_acebgp01
   autoClose: true
   unAvailable: true
   cardMode: true

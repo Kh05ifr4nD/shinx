@@ -31,10 +31,10 @@ in
   sops.secrets = {
     "gui-for-singbox/clash-api-secret" = secretFile "gui-for-singbox/clash-api-secret";
     "gui-for-singbox/subscribes.yaml" = secretFile "gui-for-singbox/subscribes.yaml";
-    "gui-for-singbox/subscribes/ID_aew67zoo.json" =
-      secretFile "gui-for-singbox/subscribes/ID_aew67zoo.json";
-    "gui-for-singbox/subscribes/ID_d52yd71h.json" =
-      secretFile "gui-for-singbox/subscribes/ID_d52yd71h.json";
+    "gui-for-singbox/subscribes/ikuuu.json" = secretFile "gui-for-singbox/subscribes/ikuuu.json";
+    "gui-for-singbox/subscribes/flowerCloud.json" =
+      secretFile "gui-for-singbox/subscribes/flowerCloud.json";
+    "gui-for-singbox/subscribes/acebgp.json" = secretFile "gui-for-singbox/subscribes/acebgp.json";
     "gui-for-singbox/sing-box/config.json" = secretFile "gui-for-singbox/sing-box/config.json";
   };
 
@@ -51,10 +51,12 @@ in
     };
     "gui-for-singbox/subscribes.yaml" =
       renderedFile "${appSupport}/subscribes.yaml" "gui-for-singbox/subscribes.yaml";
-    "gui-for-singbox/subscribes/ID_aew67zoo.json" =
-      renderedFile "${appSupport}/subscribes/ID_aew67zoo.json" "gui-for-singbox/subscribes/ID_aew67zoo.json";
-    "gui-for-singbox/subscribes/ID_d52yd71h.json" =
-      renderedFile "${appSupport}/subscribes/ID_d52yd71h.json" "gui-for-singbox/subscribes/ID_d52yd71h.json";
+    "gui-for-singbox/subscribes/ikuuu.json" =
+      renderedFile "${appSupport}/subscribes/ikuuu.json" "gui-for-singbox/subscribes/ikuuu.json";
+    "gui-for-singbox/subscribes/flowerCloud.json" =
+      renderedFile "${appSupport}/subscribes/flowerCloud.json" "gui-for-singbox/subscribes/flowerCloud.json";
+    "gui-for-singbox/subscribes/acebgp.json" =
+      renderedFile "${appSupport}/subscribes/acebgp.json" "gui-for-singbox/subscribes/acebgp.json";
     "gui-for-singbox/sing-box/config.json" =
       renderedFile "${appSupport}/sing-box/config.json" "gui-for-singbox/sing-box/config.json";
   };
@@ -65,6 +67,14 @@ in
     install -d -m 0755 -o ${lib.escapeShellArg user.name} -g staff ${lib.escapeShellArg appSupport}
     install -d -m 0755 -o ${lib.escapeShellArg user.name} -g staff ${lib.escapeShellArg "${appSupport}/subscribes"}
     install -d -m 0755 -o ${lib.escapeShellArg user.name} -g staff ${lib.escapeShellArg "${appSupport}/sing-box"}
+
+    for subscription in ${lib.escapeShellArg "${appSupport}/subscribes"}/*.json; do
+      [ -e "$subscription" ] || [ -L "$subscription" ] || continue
+      case "''${subscription##*/}" in
+        flowerCloud.json|ikuuu.json|acebgp.json) ;;
+        *) rm "$subscription" ;;
+      esac
+    done
 
     if [ -d ${lib.escapeShellArg appBundleMacOS} ]; then
       if [ -e ${lib.escapeShellArg appBundleData} ] && [ ! -L ${lib.escapeShellArg appBundleData} ]; then
