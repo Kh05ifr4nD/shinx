@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     fastfetch
     file
+    gh
     hyperfine
   ];
   programs = {
@@ -17,6 +18,7 @@
     };
     fzf = {
       enable = true;
+      historyWidget.nushell.command = "";
     };
     ripgrep = {
       enable = true;

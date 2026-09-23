@@ -1,4 +1,4 @@
 { lib, pkgs, ... }:
 {
-  home.packages = lib.mkIf (!pkgs.stdenv.isDarwin) [ pkgs.zotero ];
+  home.packages = lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) [ pkgs.zotero ];
 }

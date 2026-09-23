@@ -7,6 +7,18 @@
 }:
 let
   gnupgHome = "${config.home.homeDirectory}/.gnupg";
+  # 30 days. default is idle timeout; max is hard cap from first unlock.
+  cacheTtl = 2592000;
+  gpgAgentConfig = ''
+    enable-ssh-support
+    grab
+    default-cache-ttl ${toString cacheTtl}
+    max-cache-ttl ${toString cacheTtl}
+    default-cache-ttl-ssh ${toString cacheTtl}
+    max-cache-ttl-ssh ${toString cacheTtl}
+    pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-mac
+    allow-loopback-pinentry
+  '';
   hasGpgPrivateKey =
     osConfig ? sops
     && osConfig.sops ? secrets
@@ -43,17 +55,23 @@ in
     };
   };
 
-  services.gpg-agent = {
-    defaultCacheTtl = 86400;
+  home.file.".gnupg/gpg-agent.conf" = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+    text = gpgAgentConfig;
+  };
+
+  services.gpg-agent = lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
+    defaultCacheTtl = cacheTtl;
+    defaultCacheTtlSsh = cacheTtl;
     enable = true;
     enableNushellIntegration = false;
     enableSshSupport = true;
     extraConfig = ''
       allow-loopback-pinentry
     '';
-    maxCacheTtl = 259200;
+    maxCacheTtl = cacheTtl;
+    maxCacheTtlSsh = cacheTtl;
     pinentry.package = lib.mkDefault (
-      if pkgs.stdenv.isDarwin then
+      if pkgs.stdenv.hostPlatform.isDarwin then
         pkgs.pinentry_mac
       else if (config.services.xserver.enable or false) then
         pkgs.pinentry-qt
@@ -68,5 +86,8 @@ in
       $env.GPG_TTY = ($gpg_tty.stdout | str trim)
       ${pkgs.gnupg}/bin/gpg-connect-agent --quiet updatestartuptty /bye | ignore
     }
+    ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+      $env.SSH_AUTH_SOCK = (${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket | str trim)
+    ''}
   '';
 }

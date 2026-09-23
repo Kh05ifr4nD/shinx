@@ -30,7 +30,7 @@ in
         ControlMaster = "no";
         ControlPath = "none";
         ControlPersist = "no";
-        HostName = "100.64.89.99";
+        HostName = "100.126.161.111";
         IdentitiesOnly = true;
         IdentityFile = [ "~/.ssh/id_ed25519_${hostName}" ];
         PasswordAuthentication = "no";

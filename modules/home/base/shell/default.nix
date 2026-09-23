@@ -34,12 +34,12 @@ in
       enableNushellIntegration = true;
     };
     nushell = {
-      configDir = lib.mkIf pkgs.stdenv.isDarwin "Library/Application Support/nushell";
+      configDir = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "Library/Application Support/nushell";
       configFile.source = ./nushell/config.nu;
       enable = true;
       envFile.source = ./nushell/env.nu;
       environmentVariables = proxyEnv;
-      extraEnv = lib.optionalString pkgs.stdenv.isDarwin ''
+      extraEnv = lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
         $env.PATH = ${lib.hm.nushell.toNushell { } darwinPath}
       '';
       loginFile.source = ./nushell/login.nu;

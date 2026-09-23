@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 
 {
-  home.packages = lib.mkIf pkgs.stdenv.isLinux (
+  home.packages = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (
     with pkgs;
     [
       podman

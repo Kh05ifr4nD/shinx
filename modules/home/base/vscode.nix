@@ -11,6 +11,8 @@ let
     .vscode-marketplace-release;
   marketplaceUniversal =
     flake.inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.vscode-marketplace-universal;
+  openVsxUniversal =
+    flake.inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.open-vsx-universal;
 
   sortedAttrs =
     attrs:
@@ -28,8 +30,8 @@ let
       adpyke.codesnap
       arrterian.nix-env-selector
       christian-kohler.path-intellisense
+      cuelangorg.vscode-cue
       dotjoshjohnson.xml
-      eamodio.gitlens
       evgeniypeshkov.syntax-highlighter
       fill-labs.dependi
       github.vscode-github-actions
@@ -67,10 +69,10 @@ let
     "[xml]" = {
       "editor.defaultFormatter" = "redhat.vscode-xml";
     };
-    "dev.containers.dockerPath" = if pkgs.stdenv.isDarwin then "docker" else "podman";
+    "dev.containers.dockerPath" = if pkgs.stdenv.hostPlatform.isDarwin then "docker" else "podman";
     "diffEditor.ignoreTrimWhitespace" = false;
     "editor.foldingImportsByDefault" = true;
-    "editor.fontFamily" = "\"Maple Mono NF CN\", \"Noto Color Emoji\"";
+    "editor.fontFamily" = "\"Maple Mono NF CN\"";
     "editor.fontWeight" = "600";
     "editor.formatOnSave" = true;
     "editor.inlayHints.padding" = true;
@@ -80,8 +82,9 @@ let
     "editor.tabSize" = 2;
     "editor.wordWrap" = "bounded";
     "editor.wordWrapColumn" = 96;
+    "editor.wrappingStrategy" = "advanced";
     "extensions.autoCheckUpdates" = false;
-    "extensions.autoUpdate" = false;
+    "extensions.autoUpdate" = "off";
     "files.autoSave" = "onWindowChange";
     "git.autofetch" = true;
     "http.proxySupport" = "on";
@@ -101,6 +104,7 @@ let
     "terminal.integrated.suggest.enabled" = true;
     "update.mode" = "none";
     "update.showReleaseNotes" = false;
+    "window.zoomLevel" = 1.25;
     "workbench.colorTheme" = "SynthWave '84";
     "workbench.enableExperiments" = false;
     "workbench.iconTheme" = "material-icon-theme";
@@ -181,7 +185,7 @@ let
       ms-vscode.cmake-tools
     ]
     ++ [
-      marketplaceUniversal.vadimcn.vscode-lldb
+      openVsxUniversal.vadimcn.vscode-lldb
     ];
 
   rustExtensions = with marketplace; [
