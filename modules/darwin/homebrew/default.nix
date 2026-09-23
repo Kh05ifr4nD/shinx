@@ -11,19 +11,17 @@ let
     homebrew-brewforge-chinese
     homebrew-cask
     homebrew-core
-    homebrew-muxy-app-tap
     ;
   homebrewCurlConfig = pkgs.writeText "homebrew-curlrc" ''
-    connect-timeout = 20
+    connect-timeout = 12
     retry-all-errors
     retry-connrefused
-    retry-delay = 5
+    retry-delay = 4
   '';
   homebrewNetworkEnv = {
-    HOMEBREW_BUNDLE_JOBS = "1";
-    HOMEBREW_CURL_RETRIES = "8";
+    HOMEBREW_CURL_RETRIES = "4";
     HOMEBREW_CURLRC = "${homebrewCurlConfig}";
-    HOMEBREW_DOWNLOAD_CONCURRENCY = "1";
+    HOMEBREW_DOWNLOAD_CONCURRENCY = "4";
   };
   proxyEnv = import ../../proxy-env.nix { inherit lib; };
 in
@@ -36,40 +34,40 @@ in
     brews = [
       "mas"
     ];
+    caskArgs.input_methoddir = "/Users/${user.name}/Library/Input Methods";
     casks = [
       "brewforge/chinese/gui-for-singbox"
-      "cc-switch"
       "chatgpt"
-      "codex-app"
-      "cog-app"
+      # "cog-app"
+      "cursor"
       "ghostty"
-      "homebrew/cask/onedrive"
-      "microsoft-excel"
-      "microsoft-powerpoint"
-      "microsoft-word"
+      "hammerspoon"
       "mos"
-      "muxy"
-      "obs"
+      # "obs"
       "obsidian"
-      "opencode-desktop"
       "orbstack"
+      "paseo"
       "qq"
       "steam"
-      "tailscale-app"
       "tencent-meeting"
-      "utm"
+      # "utm"
       "visual-studio-code"
       "vlc"
-      "wechat"
       "wetype"
-      "zen"
+      # "zen"
       "zotero"
     ];
     enable = true;
+    greedyCasks = true;
     global.autoUpdate = false;
     masApps = {
-      "PDFgear: PDF Editor & Reader" = 6469021132;
-      "沉浸式翻譯" = 6447957425;
+      "Imp Translate" = 6764317525;
+      "Microsoft Excel" = 462058435;
+      "Microsoft PowerPoint" = 462062816;
+      "Microsoft Word" = 462054704;
+      "OneDrive" = 823766827;
+      "Tailscale" = 1475387142;
+      "WeChat" = 836500024;
     };
     onActivation = {
       autoUpdate = false;
@@ -83,13 +81,11 @@ in
   nix-homebrew = {
     autoMigrate = false;
     enable = true;
-    enableRosetta = true;
     mutableTaps = false;
     taps = {
       "brewforge/homebrew-chinese" = homebrew-brewforge-chinese;
       "homebrew/homebrew-cask" = homebrew-cask;
       "homebrew/homebrew-core" = homebrew-core;
-      "muxy-app/homebrew-tap" = homebrew-muxy-app-tap;
     };
     user = user.name;
   };

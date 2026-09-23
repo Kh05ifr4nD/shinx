@@ -1,4 +1,8 @@
-{ flake, ... }:
+{
+  config,
+  flake,
+  ...
+}:
 let
   inherit (flake.config) user;
 in
@@ -23,9 +27,20 @@ in
       mode = "0400";
       owner = user.name;
     };
+    secrets."nix/githubAccessToken" = {
+      mode = "0400";
+      owner = user.name;
+    };
     secrets."ssh/githubPrivateKey" = {
       mode = "0400";
       owner = user.name;
+    };
+    templates."nix/access-tokens.conf" = {
+      mode = "0400";
+      owner = user.name;
+      content = ''
+        access-tokens = github.com=${config.sops.placeholder."nix/githubAccessToken"}
+      '';
     };
   };
 }

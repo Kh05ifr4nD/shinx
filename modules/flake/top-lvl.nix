@@ -49,9 +49,9 @@ let
     { config, pkgs, ... }:
     {
       home.homeDirectory = lib.mkDefault "/${
-        if pkgs.stdenv.isDarwin then "Users" else "home"
+        if pkgs.stdenv.hostPlatform.isDarwin then "Users" else "home"
       }/${config.home.username}";
-      home.sessionPath = lib.mkIf pkgs.stdenv.isDarwin [
+      home.sessionPath = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin [
         "/etc/profiles/per-user/$USER/bin"
         "/nix/var/nix/profiles/system/sw/bin"
         "/usr/local/bin"
@@ -190,6 +190,28 @@ in
     }:
     let
       localPackages = forAllNixFiles "${self}/packages" (fn: pkgs.callPackage fn { });
+      rawActivate = import "${inputs.nixos-unified}/activate" {
+        inherit
+          inputs'
+          lib
+          pkgs
+          self
+          system
+          ;
+      };
+      activate =
+        if pkgs.stdenv.hostPlatform.isDarwin then
+          pkgs.runCommand "activate" { inherit (rawActivate) meta; } ''
+            mkdir -p $out
+            cp -R ${rawActivate}/. $out/
+            chmod -R u+w $out
+            # macOS already provides hostname; nixos-rebuild is only needed by Linux activate outputs.
+            substituteInPlace $out/bin/activate.nu \
+              --replace-fail '"${pkgs.nixos-rebuild}/bin",' "" \
+              --replace-fail ',"${pkgs.hostname}/bin"' ""
+          ''
+        else
+          rawActivate;
     in
     {
       legacyPackages.homeConfigurations = forAllNixFiles "${self}/configurations/home" (
@@ -199,15 +221,7 @@ in
       packages =
         (lib.filterAttrs (_: pkg: lib.meta.availableOn pkgs.stdenv.hostPlatform pkg) localPackages)
         // {
-          activate = import "${inputs.nixos-unified}/activate" {
-            inherit
-              inputs'
-              lib
-              pkgs
-              self
-              system
-              ;
-          };
+          inherit activate;
           default = self'.packages.activate;
           update = pkgs.writeShellApplication {
             name = "update-main-flake-inputs";

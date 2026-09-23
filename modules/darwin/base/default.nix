@@ -18,6 +18,7 @@ let
   runAsUser = command: ''
     launchctl asuser "$(id -u -- ${lib.escapeShellArg user.name})" sudo --user=${lib.escapeShellArg user.name} -- ${command}
   '';
+  runAsUserShell = script: runAsUser "/bin/sh -c ${lib.escapeShellArg script}";
   toCliBool = value: if value then "1" else "0";
 in
 {
@@ -50,23 +51,50 @@ in
     backupFileExtension = "backup";
     users.${user.name} = {
       home.stateVersion = config.modules.home.stateVersion;
+      home.file = {
+        ".hammerspoon/init.lua" = {
+          text = ''
+            local watchedDevices = {}
+
+            hs.autoLaunch(true)
+
+            local function pauseCurrentMedia()
+              hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
+              hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
+            end
+
+            local function watchDevice(device)
+              if device:jackConnected() == nil then
+                return
+              end
+
+              local watcher = device:watcherCallback(function(deviceUID, event)
+                if event ~= "jack" then
+                  return
+                end
+
+                local currentDevice = hs.audiodevice.findDeviceByUID(deviceUID)
+                if currentDevice and not currentDevice:jackConnected() then
+                  pauseCurrentMedia()
+                end
+              end)
+
+              if watcher then
+                watchedDevices[device:uid()] = watcher
+                watcher:watcherStart()
+              end
+            end
+
+            for _, device in ipairs(hs.audiodevice.allOutputDevices()) do
+              watchDevice(device)
+            end
+          '';
+        };
+      };
       imports = [
         (flake.inputs.self + /configurations/home/base)
       ]
       ++ config.modules.home.imports;
-    };
-  };
-
-  launchd.user.agents.mos = {
-    serviceConfig = {
-      LimitLoadToSessionType = "Aqua";
-      KeepAlive = true;
-      ProgramArguments = [
-        "/Applications/Mos.app/Contents/MacOS/Mos"
-      ];
-      RunAtLoad = true;
-      StandardErrorPath = "/tmp/org.nixos.mos.stderr.log";
-      StandardOutPath = "/tmp/org.nixos.mos.stdout.log";
     };
   };
 
@@ -79,12 +107,15 @@ in
       "https://cache.numtide.com"
       "https://cache.thalheim.io"
       "https://nix-community.cachix.org"
-      "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
     ];
     extra-trusted-public-keys = [
       "cache.thalheim.io-1:R7msbosLEZKrxk/lKxf9BTjOOH7Ax3H0Qj0/6wiHOgc="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+    substituters = lib.mkBefore [
+      "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
+      "https://mirror.nju.edu.cn/nix-channels/store"
     ];
     trusted-users = [
       user.name
@@ -118,6 +149,13 @@ in
         dscl . -create ${lib.escapeShellArg "/Users/${user.name}"} UserShell ${lib.escapeShellArg nuLoginShell}
       fi
 
+      echo >&2 "removing unused Apple input method preferences..."
+      ${runAsUserShell ''
+        /usr/bin/defaults delete com.apple.inputmethod.CoreChineseEngineFramework 2>/dev/null || true
+        /usr/bin/defaults delete com.apple.speech.recognition.AppleSpeechRecognition.prefs 2>/dev/null || true
+        /usr/bin/killall TextInputMenuAgent TextInputSwitcher cfprefsd SystemUIServer 2>/dev/null || true
+      ''}
+
     '';
 
     defaults = {
@@ -131,29 +169,15 @@ in
           TrackpadScroll = true;
         };
         "com.apple.HIToolbox" = {
-          AppleDictationAutoEnable = true;
+          AppleDictationAutoEnable = false;
           AppleEnabledInputSources = [
             {
               InputSourceKind = "Keyboard Layout";
               "KeyboardLayout ID" = 252;
               "KeyboardLayout Name" = "ABC";
             }
-            {
-              "Bundle ID" = "com.apple.inputmethod.SCIM";
-              InputSourceKind = "Keyboard Input Method";
-            }
-            {
-              "Bundle ID" = "com.apple.inputmethod.SCIM";
-              "Input Mode" = "com.apple.inputmethod.SCIM.Shuangpin";
-              InputSourceKind = "Input Mode";
-            }
           ];
           AppleInputSourceHistory = [
-            {
-              "Bundle ID" = "com.apple.inputmethod.SCIM";
-              "Input Mode" = "com.apple.inputmethod.SCIM.Shuangpin";
-              InputSourceKind = "Input Mode";
-            }
             {
               InputSourceKind = "Keyboard Layout";
               "KeyboardLayout ID" = 252;
@@ -162,37 +186,17 @@ in
           ];
           AppleSelectedInputSources = [
             {
-              "Bundle ID" = "com.apple.inputmethod.SCIM";
-              "Input Mode" = "com.apple.inputmethod.SCIM.Shuangpin";
-              InputSourceKind = "Input Mode";
+              InputSourceKind = "Keyboard Layout";
+              "KeyboardLayout ID" = 252;
+              "KeyboardLayout Name" = "ABC";
             }
           ];
-        };
-        "com.apple.inputmethod.CoreChineseEngineFramework" = {
-          fuzzyPinyinEnabled = false;
-          shuangpinLayout = 4;
-        };
-        "com.apple.speech.recognition.AppleSpeechRecognition.prefs" = {
-          DictationIMDidAskToConfirmLanguageChoice = true;
-          DictationIMIntroMessagePresented = true;
-          DictationIMNetworkBasedLocaleIdentifier = "zh_CN";
-          DictationIMPreferredLanguageIdentifiers = [
-            "zh_CN"
-          ];
-          DictationIMUseOnlyOfflineDictation = false;
-          VisibleNetworkSRLocaleIdentifiers = {
-            en_US = false;
-            wuu_CN = false;
-            yue_CN = false;
-            zh_CN = true;
-            zh_HK = false;
-          };
         };
         "com.caldis.Mos" = {
           deadZone = 1.0;
           duration = 4.35;
           optionsExist = "optionsExist";
-          reverse = true;
+          reverse = false;
           reverseHorizontal = false;
           reverseVertical = true;
           smooth = true;
@@ -202,7 +206,7 @@ in
           speed = 2.0;
           step = 30.0;
         };
-        "io.tailscale.ipn.macsys" = {
+        "io.tailscale.ipn.macos" = {
           TailscaleStartOnLogin = true;
         };
       };
@@ -247,10 +251,12 @@ in
           { app = "/System/Applications/Apps.app"; }
           { app = "/System/Applications/Calendar.app"; }
           { app = "/Applications/Safari.app"; }
-          { app = "/Applications/Codex.app"; }
-          { app = "/Applications/Visual Studio Code.app"; }
-          { app = "/Applications/Ghostty.app"; }
+          { app = "/System/Applications/Utilities/Activity Monitor.app"; }
           { app = "/System/Applications/System Settings.app"; }
+          { app = "/Applications/Ghostty.app"; }
+          { app = "/Applications/Visual Studio Code.app"; }
+          { app = "/Applications/ChatGPT.app"; }
+          { app = "/Applications/Cursor.app"; }
         ];
         persistent-others = [
           {

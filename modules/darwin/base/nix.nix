@@ -24,13 +24,14 @@
     };
 
     settings = {
-      connect-timeout = 8;
-      download-attempts = 3;
+      connect-timeout = 4;
+      download-attempts = 4;
       fallback = true;
       keep-derivations = true;
       keep-outputs = true;
       max-free = 68719476736;
       min-free = 34359738368;
+      stalled-download-timeout = 4;
     };
   };
 }

@@ -1,6 +1,21 @@
 {
   description = "NixOS & Nix Darwin & Home Manager 统一配置";
   inputs = {
+    coolheaded = {
+      inputs = {
+        bun2nix.inputs = {
+          flake-parts.follows = "flake-parts";
+          nixpkgs.follows = "nixpkgs";
+          systems.follows = "systems";
+          treefmt-nix.follows = "treefmt-nix";
+        };
+        flakeParts.follows = "flake-parts";
+        gitHooksNix.follows = "git-hooks-nix";
+        nixpkgs.follows = "nixpkgs";
+        treefmtNix.follows = "treefmt-nix";
+      };
+      url = "github:Kh05ifr4nD/coolheaded";
+    };
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/disko/latest";
@@ -18,6 +33,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
     };
+    homebrew-brewforge-chinese = {
+      flake = false;
+      url = "github:Brewforge/homebrew-chinese";
+    };
     homebrew-cask = {
       flake = false;
       url = "github:homebrew/homebrew-cask";
@@ -25,29 +44,6 @@
     homebrew-core = {
       flake = false;
       url = "github:homebrew/homebrew-core";
-    };
-    homebrew-brewforge-chinese = {
-      flake = false;
-      url = "github:Brewforge/homebrew-chinese";
-    };
-    homebrew-muxy-app-tap = {
-      flake = false;
-      url = "github:muxy-app/homebrew-tap";
-    };
-    coolheaded = {
-      inputs = {
-        bun2nix.inputs = {
-          flake-parts.follows = "flake-parts";
-          nixpkgs.follows = "nixpkgs";
-          systems.follows = "systems";
-          treefmt-nix.follows = "treefmt-nix";
-        };
-        flakeParts.follows = "flake-parts";
-        gitHooksNix.follows = "git-hooks-nix";
-        nixpkgs.follows = "nixpkgs";
-        treefmtNix.follows = "treefmt-nix";
-      };
-      url = "github:Kh05ifr4nD/coolheaded";
     };
     musnix = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,20 +73,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
     };
-    zen-browser = {
-      inputs.home-manager.follows = "home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:0xc000022070/zen-browser-flake";
-    };
   };
   nixConfig = {
-    connect-timeout = 8;
-    download-attempts = 3;
+    connect-timeout = 4;
+    download-attempts = 4;
     extra-substituters = [
       "https://cache.numtide.com"
       "https://cache.thalheim.io"
       "https://nix-community.cachix.org"
-      "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
     ];
     extra-trusted-public-keys = [
       "cache.thalheim.io-1:R7msbosLEZKrxk/lKxf9BTjOOH7Ax3H0Qj0/6wiHOgc="
@@ -98,6 +88,12 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
     fallback = true;
+    stalled-download-timeout = 4;
+    substituters = [
+      "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"
+      "https://mirror.nju.edu.cn/nix-channels/store"
+      "https://cache.nixos.org/"
+    ];
   };
   outputs =
     {
