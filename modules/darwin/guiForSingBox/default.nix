@@ -32,8 +32,6 @@ in
     "gui-for-singbox/clash-api-secret" = secretFile "gui-for-singbox/clash-api-secret";
     "gui-for-singbox/subscribes.yaml" = secretFile "gui-for-singbox/subscribes.yaml";
     "gui-for-singbox/subscribes/ikuuu.json" = secretFile "gui-for-singbox/subscribes/ikuuu.json";
-    "gui-for-singbox/subscribes/flowerCloud.json" =
-      secretFile "gui-for-singbox/subscribes/flowerCloud.json";
     "gui-for-singbox/subscribes/acebgp.json" = secretFile "gui-for-singbox/subscribes/acebgp.json";
     "gui-for-singbox/sing-box/config.json" = secretFile "gui-for-singbox/sing-box/config.json";
   };
@@ -53,8 +51,6 @@ in
       renderedFile "${appSupport}/subscribes.yaml" "gui-for-singbox/subscribes.yaml";
     "gui-for-singbox/subscribes/ikuuu.json" =
       renderedFile "${appSupport}/subscribes/ikuuu.json" "gui-for-singbox/subscribes/ikuuu.json";
-    "gui-for-singbox/subscribes/flowerCloud.json" =
-      renderedFile "${appSupport}/subscribes/flowerCloud.json" "gui-for-singbox/subscribes/flowerCloud.json";
     "gui-for-singbox/subscribes/acebgp.json" =
       renderedFile "${appSupport}/subscribes/acebgp.json" "gui-for-singbox/subscribes/acebgp.json";
     "gui-for-singbox/sing-box/config.json" =
@@ -71,7 +67,7 @@ in
     for subscription in ${lib.escapeShellArg "${appSupport}/subscribes"}/*.json; do
       [ -e "$subscription" ] || [ -L "$subscription" ] || continue
       case "''${subscription##*/}" in
-        flowerCloud.json|ikuuu.json|acebgp.json) ;;
+        ikuuu.json|acebgp.json) ;;
         *) rm "$subscription" ;;
       esac
     done
