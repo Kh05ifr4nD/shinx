@@ -4,6 +4,7 @@
 *.key
 /.devenv/
 /.direnv/
+/.zvec-grep/
 /.env
 /.env.*
 /.idea/
