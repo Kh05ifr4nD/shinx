@@ -45,6 +45,18 @@
       flake = false;
       url = "github:homebrew/homebrew-core";
     };
+    homebrew-stablyai-orca = {
+      flake = false;
+      url = "github:stablyai/homebrew-orca";
+    };
+    llm-agents = {
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        systems.follows = "systems";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+      url = "github:numtide/llm-agents.nix";
+    };
     musnix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:musnix/musnix";

@@ -11,6 +11,7 @@ let
     homebrew-brewforge-chinese
     homebrew-cask
     homebrew-core
+    homebrew-stablyai-orca
     ;
   homebrewCurlConfig = pkgs.writeText "homebrew-curlrc" ''
     connect-timeout = 12
@@ -37,16 +38,17 @@ in
     caskArgs.input_methoddir = "/Users/${user.name}/Library/Input Methods";
     casks = [
       "brewforge/chinese/gui-for-singbox"
+      "stablyai/orca/orca"
       "chatgpt"
       # "cog-app"
       "cursor"
+      "donut"
       "ghostty"
       "hammerspoon"
       "mos"
       # "obs"
       "obsidian"
       "orbstack"
-      "paseo"
       "qq"
       "steam"
       "tencent-meeting"
@@ -86,6 +88,7 @@ in
       "brewforge/homebrew-chinese" = homebrew-brewforge-chinese;
       "homebrew/homebrew-cask" = homebrew-cask;
       "homebrew/homebrew-core" = homebrew-core;
+      "stablyai/homebrew-orca" = homebrew-stablyai-orca;
     };
     user = user.name;
   };

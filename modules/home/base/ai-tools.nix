@@ -6,40 +6,39 @@
   ...
 }:
 let
+  system = pkgs.stdenv.hostPlatform.system;
   coolheaded = flake.inputs.coolheaded;
-  packages = coolheaded.packages or { };
-  packageNames = [
-    "codeGraph"
-    "cursorCli"
+  llmAgents = flake.inputs.llm-agents.packages.${system};
+  # nixpkgs publishes Cursor's CLI as cursor-cli; llm-agents.nix calls it cursor-agent.
+  nixpkgsName = {
+    cursor-agent = "cursor-cli";
+  };
+  pick = name: llmAgents.${name} or pkgs.${nixpkgsName.${name} or name};
+  agentNames = [
+    "claude-code"
+    "codegraph"
+    "cursor-agent"
     "entire"
-    "ohMyPi"
-    "qmd"
+    "fff-mcp"
+    "paseo"
     "rtk"
-    "semble"
-    "zvecGrep"
-  ];
-  systemKey = pkgs.stdenv.hostPlatform.system;
-  systemPackages = packages.${systemKey};
-  agentPackages = map (name: systemPackages.${name}) packageNames;
-  nixpkgsAgentPackages = [
-    pkgs.fff-mcp
-    pkgs.skills
-  ];
-
-  localInferencePackages = [
-    pkgs.llama-cpp
+    "skills"
   ]
-  ++ lib.optionals (pkgs.stdenv.hostPlatform.isDarwin && pkgs.stdenv.hostPlatform.isAarch64) [
-    pkgs.python3Packages.mlx-lm
+  ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+    "omp"
   ];
 in
 {
   imports = [ coolheaded.homeModules.lazyCodexAi ];
 
-  home.packages = agentPackages ++ nixpkgsAgentPackages ++ localInferencePackages;
+  home.packages = map pick agentNames ++ [
+    # Still published only by coolheaded.
+    coolheaded.packages.${system}.zvecGrep
+  ];
 
   programs = {
     codex = {
+      package = pick "codex";
       settings = {
         analytics.enabled = false;
         approval_policy = "never";
@@ -54,6 +53,7 @@ in
           respect_system_proxy = true;
           runtime_metrics = true;
           terminal_visualization_instructions = true;
+          view_image = true;
         };
         feedback.enabled = false;
         file_opener = "vscode";
@@ -71,21 +71,16 @@ in
             command = "fff-mcp";
             startup_timeout_sec = 8;
           };
-          openaiDeveloperDocs.url = "https://developers.openai.com/mcp";
-          qmd = {
-            args = [ "mcp" ];
-            command = "qmd";
-            startup_timeout_sec = 8;
-            tool_timeout_sec = 48;
-          };
-          semble = {
-            command = "semble";
-            startup_timeout_sec = 8;
-            tool_timeout_sec = 96;
+          zvecGrep = {
+            args = [
+              "server"
+              "--stdio"
+            ];
+            command = "zg";
           };
         }
         // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
-          safari-mcp = {
+          safari = {
             args = [ "--mcp" ];
             command = "safaridriver";
           };
@@ -95,9 +90,9 @@ in
           max_raw_memories_for_consolidation = 32;
           use_memories = true;
         };
-        model = "gpt-6-sol";
-        model_auto_compact_token_limit = 393216;
-        model_context_window = 448000;
+        model = "gpt-6.1-sol";
+        model_auto_compact_token_limit = 320000;
+        model_context_window = 384000;
         model_reasoning_effort = "medium";
         model_reasoning_summary = "auto";
         model_verbosity = "medium";
@@ -118,7 +113,6 @@ in
           "inherit" = "core";
         };
         tools = {
-          view_image = true;
           web_search.context_size = "high";
         };
         tui = {
@@ -162,24 +156,8 @@ in
     };
 
     lazyCodexAi = {
-      codeGraph = true;
       context7 = false;
       enable = true;
     };
   };
-
-  home.activation.cursorSafariMcp = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin (
-    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mcp_file="$HOME/.cursor/mcp.json"
-      mkdir -p "$(dirname "$mcp_file")"
-      if [ ! -f "$mcp_file" ]; then
-        printf '%s\n' '{"mcpServers":{}}' > "$mcp_file"
-      fi
-      tmp_file="$(mktemp)"
-      ${pkgs.jq}/bin/jq --arg command safaridriver '
-        .mcpServers["safari-mcp"] = {"args": ["--mcp"], "command": $command}
-      ' "$mcp_file" > "$tmp_file"
-      mv "$tmp_file" "$mcp_file"
-    ''
-  );
 }
