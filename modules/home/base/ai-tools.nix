@@ -20,7 +20,6 @@ let
     "cursor-agent"
     "entire"
     "fff-mcp"
-    "paseo"
     "rtk"
     "skills"
   ]

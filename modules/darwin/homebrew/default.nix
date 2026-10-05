@@ -49,6 +49,7 @@ in
       # "obs"
       "obsidian"
       "orbstack"
+      "paseo"
       "qq"
       "steam"
       "tencent-meeting"
