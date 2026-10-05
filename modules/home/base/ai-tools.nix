@@ -18,7 +18,6 @@ let
     "claude-code"
     "codegraph"
     "cursor-agent"
-    "entire"
     "fff-mcp"
     "rtk"
     "skills"
